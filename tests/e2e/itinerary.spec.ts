@@ -23,6 +23,8 @@ test.describe('public itinerary', () => {
     ['/budget', /Budget/i],
     ['/bookings', /Bookings/i],
     ['/about', /About|Sources|Trip notes/i],
+    ['/privacy', /Privacy/i],
+    ['/terms', /Terms/i],
   ] as const) {
     test(`${route} is directly addressable through the hash router`, async ({ page }) => {
       await openRoute(page, route)
@@ -82,5 +84,12 @@ test.describe('public itinerary', () => {
         .map((link) => link.getAttribute('href')),
     )
     expect(unsafeLinks).toEqual([])
+  })
+
+  test('uses the custom text-led interface and publishes policy links', async ({ page }) => {
+    await openRoute(page)
+    await expect(page.locator('svg.lucide')).toHaveCount(0)
+    await expect(page.getByRole('link', { name: 'Privacy' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Terms' })).toBeVisible()
   })
 })

@@ -7,6 +7,8 @@ import { BudgetPage } from './pages/BudgetPage'
 import { DayPage } from './pages/DayPage'
 import { MapPage } from './pages/MapPage'
 import { OverviewPage } from './pages/OverviewPage'
+import { PrivacyPage } from './pages/PrivacyPage'
+import { TermsPage } from './pages/TermsPage'
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
             <Route path="/budget" element={<BudgetPage />} />
             <Route path="/bookings" element={<BookingsPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
             <Route path="*" element={<OverviewPage />} />
           </Routes>
         </Layout>

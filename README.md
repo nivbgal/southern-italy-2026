@@ -1,4 +1,4 @@
-# Niv & Rinat — Southern Italy 2026
+# Niv & Rinat: Southern Italy 2026
 
 A mobile-first, offline-readable road-book for a 12-night trip through Puglia, Matera and Naples, 14–26 September 2026.
 

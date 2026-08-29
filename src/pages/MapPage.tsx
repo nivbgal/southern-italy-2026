@@ -1,5 +1,4 @@
 import { Suspense, lazy, useMemo, useState } from 'react'
-import { Car, ExternalLink, MapPinned, Search, Star } from 'lucide-react'
 import { venues } from '../data/trip'
 
 const RouteMap = lazy(() => import('../components/RouteMap'))
@@ -19,13 +18,13 @@ export function MapPage() {
     <>
       <header className="page-intro"><p className="eyebrow">Five bases · one clean loop</p><h1>Map the road trip at a glance.</h1><p>The map is deliberately a planning map. Open Google Maps from any card for turn-by-turn directions and live traffic.</p></header>
       <div className="map-shell">
-        <Suspense fallback={<div className="map-panel state-panel">Loading the route map…</div>}><RouteMap /></Suspense>
+        <Suspense fallback={<div className="map-panel map-loading" role="status"><span>Loading route map</span><i className="skeleton skeleton-map" /></div>}><RouteMap /></Suspense>
         <aside className="map-list" aria-label="Route stops" tabIndex={0}>{routeStops.map(([name, dates, note], index) => <article key={name}><span>{index + 1}</span><div><small>{dates}</small><h2>{name}</h2><p>{note}</p></div></article>)}</aside>
       </div>
-      <section className="map-truth"><Car /><p><strong>This is not live traffic.</strong> Departure-specific traffic ranges appear on each day. Use the Google Maps actions on the travel morning before leaving.</p></section>
+      <section className="map-truth"><p><strong>Traffic data is typical.</strong> Each day shows its expected range. Check Google Maps on the travel morning before leaving.</p></section>
       <section>
-        <div className="section-heading"><div><p className="eyebrow">Verified pins</p><h2>Places by category</h2></div><div className="filter-tabs" role="group" aria-label="Filter places">{(['all', 'restaurant', 'attraction', 'beach'] as const).map((item) => <button className={filter === item ? 'active' : ''} aria-label={item === 'all' ? 'Show all places' : `Show ${item}s`} aria-pressed={filter === item} key={item} onClick={() => setFilter(item)}>{item === 'all' ? <Search /> : item === 'restaurant' ? 'Eat' : item === 'attraction' ? 'See' : 'Swim'}</button>)}</div></div>
-        <div className="venue-grid">{filtered.map((venue) => <article className="venue-card" key={venue.id}><div><span className="badge">{venue.city}</span><span className="rating"><Star /> {venue.rating ?? '—'} · {venue.reviewCount?.toLocaleString() ?? 'not rated'} reviews</span></div><h3>{venue.name}</h3><p>{venue.localAngle}</p><a className="button secondary" href={venue.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPinned /> Google Maps <ExternalLink /></a></article>)}</div>
+        <div className="section-heading"><div><p className="eyebrow">Verified pins</p><h2>Places by category</h2></div><div className="filter-tabs" role="group" aria-label="Filter places">{(['all', 'restaurant', 'attraction', 'beach'] as const).map((item) => <button className={filter === item ? 'active' : ''} aria-label={item === 'all' ? 'Show all places' : `Show ${item}s`} aria-pressed={filter === item} key={item} onClick={() => setFilter(item)}>{item === 'all' ? 'All' : item === 'restaurant' ? 'Eat' : item === 'attraction' ? 'See' : 'Swim'}</button>)}</div></div>
+        <div className="venue-grid">{filtered.map((venue) => <article className="venue-card" key={venue.id}><div><span className="badge">{venue.city}</span><span className="rating">Rating {venue.rating ?? 'not listed'} / 5 · {venue.reviewCount?.toLocaleString() ?? 'not rated'} reviews</span></div><h3>{venue.name}</h3><p>{venue.localAngle}</p><a className="button secondary" href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></article>)}</div>
       </section>
     </>
   )

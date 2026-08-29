@@ -21,8 +21,8 @@ export default function RouteMap() {
   return (
     <MapContainer className="map-panel" center={[40.7, 16.2]} zoom={7} scrollWheelZoom={false} aria-label="Map of the Southern Italy route">
       <TileLayer attribution="&copy; OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Polyline positions={route.map((stop) => stop.point)} pathOptions={{ color: '#483cff', weight: 5, opacity: 0.85, dashArray: '10 8' }} />
-      {route.map((stop, index) => <CircleMarker key={`${stop.name}-${index}`} center={stop.point} radius={index === 0 || index === route.length - 1 ? 10 : 8} pathOptions={{ color: '#004449', fillColor: index === 2 ? '#d7ffc2' : '#fffef0', fillOpacity: 1, weight: 4 }}><Popup><strong>{stop.name}</strong><br />{stop.dates}</Popup></CircleMarker>)}
+      <Polyline positions={route.map((stop) => stop.point)} pathOptions={{ color: '#9d402e', weight: 4, opacity: 0.9, dashArray: '9 7' }} />
+      {route.map((stop, index) => <CircleMarker key={`${stop.name}-${index}`} center={stop.point} radius={index === 0 || index === route.length - 1 ? 9 : 7} pathOptions={{ color: '#173c3a', fillColor: index === 2 ? '#c8b06d' : '#f3ecda', fillOpacity: 1, weight: 3 }}><Popup><strong>{stop.name}</strong><br />{stop.dates}</Popup></CircleMarker>)}
       <FitRoute />
     </MapContainer>
   )

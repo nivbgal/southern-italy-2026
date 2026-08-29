@@ -1,4 +1,3 @@
-import { Check, Clock3, ExternalLink, Heart, MapPin } from 'lucide-react'
 import { venues } from '../data/trip'
 import type { TimelineItem } from '../data/types'
 import { useTripState } from '../state/TripStateContext'
@@ -25,15 +24,15 @@ export function Timeline({ items }: { items: TimelineItem[] }) {
                   <h3>{item.title}</h3>
                 </div>
                 <div className="icon-actions">
-                  <button aria-label={`${complete ? 'Mark incomplete' : 'Mark complete'}: ${item.title}`} className="icon-button" onClick={() => toggle('completed', item.id)}><Check /></button>
-                  <button aria-label={`Favorite: ${item.title}`} aria-pressed={Boolean(state.favorites[item.id])} className="icon-button" onClick={() => toggle('favorites', item.id)}><Heart /></button>
+                  <button aria-label={`${complete ? 'Mark incomplete' : 'Mark complete'}: ${item.title}`} aria-pressed={complete} className="text-action" onClick={() => toggle('completed', item.id)}>{complete ? 'Undo' : 'Done'}</button>
+                  <button aria-label={`Save: ${item.title}`} aria-pressed={Boolean(state.favorites[item.id])} className="text-action" onClick={() => toggle('favorites', item.id)}>{state.favorites[item.id] ? 'Saved' : 'Save'}</button>
                 </div>
               </div>
               <p className="timeline-detail">{item.detail}</p>
               <div className="timeline-footer">
-                {item.endTime && <span><Clock3 /> Until {item.endTime}</span>}
+                {item.endTime && <span>Until {item.endTime}</span>}
                 {typeof item.costEurForTwo === 'number' && <span>€{item.costEurForTwo} for two · {item.priceStatus}</span>}
-                {venue && <a href={venue.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin /> Open in Maps <ExternalLink /></a>}
+                {venue && <a href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Maps</a>}
               </div>
             </article>
           </li>

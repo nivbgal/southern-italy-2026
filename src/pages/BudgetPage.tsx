@@ -1,4 +1,3 @@
-import { Banknote, CircleEuro, Download, Info, RotateCcw, Upload } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { budgetCategories, trip } from '../data/trip'
 import { useTripState } from '../state/TripStateContext'
@@ -24,9 +23,11 @@ export function BudgetPage() {
     <>
       <header className="page-intro"><p className="eyebrow">Ground-trip limit</p><h1>Budget: €3,000 for two</h1><p>Flights and personal shopping are excluded. The rental hold is temporary credit use.</p></header>
       <section className="budget-hero">
-        <div><CircleEuro /><span>Planned<strong>€{planned.toLocaleString()}</strong></span></div>
-        <div><Banknote /><span>Entered actuals<strong>€{actual.toLocaleString()}</strong></span></div>
-        <div><Info /><span>Unallocated buffer<strong>€{(trip.budgetCapEur - planned).toLocaleString()}</strong></span></div>
+        <dl className="budget-summary-list">
+          <div><dt>Planned</dt><dd>€{planned.toLocaleString()}</dd></div>
+          <div><dt>Entered actuals</dt><dd>€{actual.toLocaleString()}</dd></div>
+          <div><dt>Unallocated buffer</dt><dd>€{(trip.budgetCapEur - planned).toLocaleString()}</dd></div>
+        </dl>
         <div className="budget-meter" role="progressbar" aria-label="Planned trip budget" aria-valuemin={0} aria-valuemax={trip.budgetCapEur} aria-valuenow={planned}><span style={{ width: `${planned / trip.budgetCapEur * 100}%` }} /></div>
       </section>
 
@@ -42,7 +43,7 @@ export function BudgetPage() {
       </section>
 
       <section className="cash-plan">
-        <p className="eyebrow">Cash is a wallet limit, not extra spend</p>
+        <p className="eyebrow">Cash stays within the trip budget</p>
         <h2>Withdraw €300–350 first. Top up €150–200 only if needed.</h2>
         <p>Split it between you, keep cards primary, usually carry no more than €120–150 collectively, and always reject dynamic currency conversion.</p>
       </section>
@@ -50,10 +51,10 @@ export function BudgetPage() {
       <section className="state-panel">
         <div><p className="eyebrow">Private device state</p><h2>Back up your checkmarks, notes and actual spend</h2><p>The export is created locally. It is never uploaded by this site.</p>{message && <p role="status">{message}</p>}</div>
         <div className="state-actions">
-          <button className="button secondary" onClick={exportState}><Download /> Export</button>
-          <button className="button secondary" onClick={() => inputRef.current?.click()}><Upload /> Import</button>
+          <button className="button secondary" onClick={exportState}>Export</button>
+          <button className="button secondary" onClick={() => inputRef.current?.click()}>Import</button>
           <input className="sr-only" ref={inputRef} type="file" accept="application/json" aria-label="Import private trip state backup" onChange={(event) => void handleImport(event.target.files?.[0])} />
-          <button className="button ghost" onClick={() => { if (window.confirm('Reset every local checkmark, note and spending entry?')) reset() }}><RotateCcw /> Reset</button>
+          <button className="button ghost" onClick={() => { if (window.confirm('Reset every local checkmark, note and spending entry?')) reset() }}>Reset</button>
         </div>
       </section>
     </>

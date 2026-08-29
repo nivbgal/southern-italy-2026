@@ -43,6 +43,9 @@ jobs:
       - name: Validate trip data
         run: npx vitest run --config vitest.config.ts
 
+      - name: Audit interface design rules
+        run: npm run audit:vibe
+
       - name: Build with repository-safe base path
         run: npm run build -- --base="$PAGES_BASE"
 
@@ -57,6 +60,9 @@ jobs:
 
       - name: Audit commitment ledger
         run: node scripts/ledger-audit.mjs qa/commitment-ledger.json
+
+      - name: Audit design checklist
+        run: node scripts/ledger-audit.mjs qa/vibe-checklist.json
 
       - name: Enforce 0.95 verification threshold
         run: node scripts/verification-gate.mjs qa/verification-report.json

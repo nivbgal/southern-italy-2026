@@ -26,7 +26,7 @@ const sources: Source[] = [
   },
   {
     id: 'sun-naples',
-    title: 'Naples sun — September 2026',
+    title: 'Naples sun, September 2026',
     publisher: 'Timeanddate',
     url: 'https://www.timeanddate.com/sun/italy/naples?month=9',
     kind: 'astronomy',
@@ -35,7 +35,7 @@ const sources: Source[] = [
   },
   {
     id: 'sun-polignano',
-    title: 'Polignano a Mare sunrise and sunset — 2026',
+    title: 'Polignano a Mare sunrise and sunset, 2026',
     publisher: 'Calendariando',
     url: 'https://www.calendariando.it/alba-e-tramonto/polignano-a-mare/?anno=2026',
     kind: 'astronomy',
@@ -44,7 +44,7 @@ const sources: Source[] = [
   },
   {
     id: 'sun-lecce',
-    title: 'Lecce sunrise and sunset — 2026',
+    title: 'Lecce sunrise and sunset, 2026',
     publisher: 'Calendariando',
     url: 'https://www.calendariando.it/alba-e-tramonto/lecce/?anno=2026',
     kind: 'astronomy',
@@ -53,7 +53,7 @@ const sources: Source[] = [
   },
   {
     id: 'sun-matera',
-    title: 'Matera sunrise and sunset — 2026',
+    title: 'Matera sunrise and sunset, 2026',
     publisher: 'Calendariando',
     url: 'https://www.calendariando.it/alba-e-tramonto/matera/?anno=2026',
     kind: 'astronomy',
@@ -1163,7 +1163,7 @@ const carPlan: CarPlan = {
   class: 'Toyota Corolla or similar automatic',
   transmission: 'automatic',
   luggageFit: 'Verify one large suitcase plus one trolley fits below the parcel shelf before accepting the category.',
-  supplier: 'Centauro shortlist — primary only if checkout terms pass',
+  supplier: 'Centauro shortlist, primary only if checkout terms pass',
   basePriceEur: 192,
   protectedBudgetEur: 370,
   priceStatus: 'shortlist-price-needs-checkout-verification',
@@ -1205,7 +1205,7 @@ const seasonalWeather = (
     highC,
     lowC,
     seaC,
-    rainRisk: 'September showers are plausible—roughly a one-in-five-day climatological chance by late month, not a daily forecast.',
+    rainRisk: 'September showers are plausible. Historical data suggests about a one-in-five-day chance by late month. This is a climate estimate.',
     summary:
       region === 'matera'
         ? 'Warm in the afternoon, noticeably cooler after sunset among the stone lanes.'
@@ -1360,7 +1360,7 @@ export const days: ItineraryDay[] = [
     subtitle: 'Caves, a slow afternoon, sunset surprise and an exuberant hands-on dinner.',
     overnightLodgingId: 'don-nicola-polignano',
     timeline: [
-      { id: 'd03-surprise', time: '08:00', endTime: '08:40', title: 'Birthday gift and room surprise', detail: 'Flowers, a handwritten note and one meaningful gift—small enough to carry through the trip.', kind: 'activity', status: 'planned', costEurForTwo: 40, priceStatus: 'estimate' },
+      { id: 'd03-surprise', time: '08:00', endTime: '08:40', title: 'Birthday gift and room surprise', detail: 'Flowers, a handwritten note and one meaningful gift. Keep it small enough to carry through the trip.', kind: 'activity', status: 'planned', costEurForTwo: 40, priceStatus: 'estimate' },
       { id: 'd03-breakfast', time: '08:45', endTime: '09:30', title: 'Birthday breakfast', detail: 'Stay light enough for a boat and later cooking dinner.', kind: 'meal', status: 'planned' },
       { id: 'd03-transfer-san-vito', time: '09:40', endTime: '10:10', title: 'Transfer toward San Vito', detail: 'Use the operator transfer or a taxi so neither traveler has to manage parking before the boat.', kind: 'transfer', status: 'needs-verification', bookingId: 'birthday-boat' },
       { id: 'd03-boat-checkin', time: '10:45', title: 'Boat check-in', detail: 'Arrive early, confirm swim stop and follow the skipper’s sea-state decision.', kind: 'check-in', status: 'needs-booking', bookingId: 'birthday-boat' },
@@ -1437,7 +1437,7 @@ export const days: ItineraryDay[] = [
       { trigger: 'Heavy rain', title: 'Shortened Valle d’Itria', plan: 'Keep Alberobello and a long covered lunch in Locorotondo; drop Martina Franca and return early.', costImpact: 'Likely lower than plan.' },
     ],
     featuredVenueIds: ['rione-monti', 'arco-dei-tipici'],
-    practicalNotes: ['Rione Monti meets the strict rating threshold; Trullo Sovrano is not required for this route.', 'Do not chase every photo stop—the quieter lanes are the point.'],
+    practicalNotes: ['Rione Monti meets the strict rating threshold; Trullo Sovrano is not required for this route.', 'Do not chase every photo stop. Spend time in the quieter lanes.'],
   },
   {
     id: 'day-06-ostuni-lecce',

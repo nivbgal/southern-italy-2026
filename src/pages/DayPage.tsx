@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ArrowLeft, ArrowRight, Car, CircleEuro, ClipboardCopy, CloudRain, Navigation, ShieldAlert, Sunrise, Sunset } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { Timeline } from '../components/Timeline'
 import { WeatherPanel } from '../components/WeatherPanel'
@@ -27,18 +26,18 @@ export function DayPage() {
           <h1>{day.title}</h1>
           <p>{day.subtitle}</p>
         </div>
-        <div className="day-location"><Navigation /><span>Base tonight<strong>{day.base}</strong></span></div>
+        <div className="day-location"><small>Base</small><span>Sleep tonight<strong>{day.base}</strong></span></div>
       </header>
 
       <section className="day-meta">
-        <div><Sunrise /><span>Sunrise<strong>{day.sun.sunrise}</strong></span></div>
-        <div><Sunset /><span>Sunset<strong>{day.sun.sunset}</strong></span></div>
-        <div><CircleEuro /><span>Cash ceiling<strong>€{day.cash.recommendedCarryEur}</strong></span></div>
-        <div><Car /><span>Mobility<strong>{day.driving.required ? 'Drive' : day.driving.mode === 'walk-and-transit' ? 'No car' : 'Transfer'}</strong></span></div>
+        <div><small>Rise</small><span>Sunrise<strong>{day.sun.sunrise}</strong></span></div>
+        <div><small>Set</small><span>Sunset<strong>{day.sun.sunset}</strong></span></div>
+        <div><small>Cash</small><span>Cash ceiling<strong>€{day.cash.recommendedCarryEur}</strong></span></div>
+        <div><small>Move</small><span>Mobility<strong>{day.driving.required ? 'Drive' : day.driving.mode === 'walk-and-transit' ? 'No car' : 'Transfer'}</strong></span></div>
       </section>
 
       <div className="day-dashboard">
-        <WeatherPanel day={day} />
+        <WeatherPanel key={day.id} day={day} />
         <section className="cash-card">
           <p className="eyebrow">Wallet plan · for two</p>
           <h2>Carry up to €{day.cash.recommendedCarryEur}</h2>
@@ -51,7 +50,7 @@ export function DayPage() {
           <h2>{day.driving.route ?? (day.driving.required ? 'Rental-car day' : 'No long drive')}</h2>
           {day.driving.distanceKm && <strong>{day.driving.distanceKm} km · {day.driving.plannedMinutes ? `${Math.floor(day.driving.plannedMinutes / 60)}h ${day.driving.plannedMinutes % 60}m planned` : ''}</strong>}
           <p>{day.driving.note}</p>
-          {day.driving.traffic && <div className="traffic-note"><ShieldAlert /> Typical delay +{day.driving.traffic.likelyDelayMinutes[0]}–{day.driving.traffic.likelyDelayMinutes[1]} min. {day.driving.traffic.explanation}</div>}
+          {day.driving.traffic && <div className="traffic-note"><strong>Traffic:</strong> Typical delay +{day.driving.traffic.likelyDelayMinutes[0]}–{day.driving.traffic.likelyDelayMinutes[1]} min. {day.driving.traffic.explanation}</div>}
           {day.driving.parking && <small><strong>Parking:</strong> {day.driving.parking}</small>}
         </section>
       </div>
@@ -60,7 +59,7 @@ export function DayPage() {
         <section className="birthday-request">
           <div><p className="eyebrow">Draft only · approval needed before sending</p><h2>Message for Pugliamare</h2><p>The class page includes dinner, wine and limoncello. It does not promise a party.</p></div>
           <textarea readOnly value={birthdayRequest} aria-label="Birthday request draft" />
-          <button className="button primary" type="button" onClick={() => { if (!navigator.clipboard) { setBirthdayMessageStatus('Copy is unavailable. Select the text above.'); return } void navigator.clipboard.writeText(birthdayRequest).then(() => setBirthdayMessageStatus('Copied. Review it before you send it.')).catch(() => setBirthdayMessageStatus('Copy failed. Select the text above.')) }}><ClipboardCopy /> Copy request</button>
+          <button className="button primary" type="button" onClick={() => { if (!navigator.clipboard) { setBirthdayMessageStatus('Copy is unavailable. Select the text above.'); return } void navigator.clipboard.writeText(birthdayRequest).then(() => setBirthdayMessageStatus('Copied. Review it before you send it.')).catch(() => setBirthdayMessageStatus('Copy failed. Select the text above.')) }}>Copy request</button>
           {birthdayMessageStatus && <p role="status">{birthdayMessageStatus}</p>}
         </section>
       )}
@@ -76,7 +75,7 @@ export function DayPage() {
           <div className="venue-grid">
             {featured.map((venue) => venue && (
               <article className="venue-card" key={venue.id}>
-                <div><span className="badge">{venue.qualification === 'editor-exception' ? 'Editor exception' : '4.7+ verified'}</span><span className="rating">★ {venue.rating ?? '—'} · {venue.reviewCount?.toLocaleString() ?? 'not rated'} reviews</span></div>
+                <div><span className="badge">{venue.qualification === 'editor-exception' ? 'Editor exception' : '4.7+ verified'}</span><span className="rating">Rating {venue.rating ?? 'not listed'} / 5 · {venue.reviewCount?.toLocaleString() ?? 'not rated'} reviews</span></div>
                 <h3>{venue.name}</h3><p>{venue.localAngle}</p>
                 <div className="venue-tags">{venue.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
                 <a className="button secondary" href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
@@ -87,13 +86,13 @@ export function DayPage() {
       )}
 
       <section className="fallback-panel">
-        <div className="card-heading"><span className="icon-disc"><CloudRain /></span><div><p className="eyebrow">Plan B is still a good day</p><h2>Weather, energy and closure fallbacks</h2></div></div>
+        <div className="card-heading"><span className="section-number" aria-hidden="true">B</span><div><p className="eyebrow">Plan B still works</p><h2>Weather, energy and closure fallbacks</h2></div></div>
         <div className="fallback-grid">{day.fallbacks.map((fallback) => <article key={fallback.title}><strong>{fallback.trigger}</strong><h3>{fallback.title}</h3><p>{fallback.plan}</p><small>{fallback.costImpact}</small></article>)}</div>
       </section>
 
       <section className="state-panel private-note">
         <div><p className="eyebrow">Private · stored only on this device</p><h2>Your note for {day.weekday}</h2></div>
-        <textarea aria-label={`Private note for ${day.weekday}`} value={state.privateNotes[day.id] ?? ''} onChange={(event) => patch({ privateNotes: { ...state.privateNotes, [day.id]: event.target.value } })} placeholder="Booking code, outfit note, surprise detail… This never syncs to the public repo." />
+        <textarea aria-label={`Private note for ${day.weekday}`} value={state.privateNotes[day.id] ?? ''} onChange={(event) => patch({ privateNotes: { ...state.privateNotes, [day.id]: event.target.value } })} placeholder="Booking code, outfit note, or surprise detail. This never syncs to the public repo." />
       </section>
 
       <section className="day-practical">
@@ -102,8 +101,8 @@ export function DayPage() {
       </section>
 
       <nav className="day-pagination" aria-label="Adjacent days">
-        {days[index - 1] ? <Link className="button secondary" to={`/day/${days[index - 1].date}`}><ArrowLeft /> Previous day</Link> : <span />}
-        {days[index + 1] ? <Link className="button primary" to={`/day/${days[index + 1].date}`}>Next day <ArrowRight /></Link> : <Link className="button primary" to="/">Trip overview <ArrowRight /></Link>}
+        {days[index - 1] ? <Link className="button secondary" to={`/day/${days[index - 1].date}`}>Previous day</Link> : <span />}
+        {days[index + 1] ? <Link className="button primary" to={`/day/${days[index + 1].date}`}>Next day</Link> : <Link className="button primary" to="/">Trip overview</Link>}
       </nav>
     </article>
   )

@@ -1,9 +1,6 @@
-import { ArrowRight, CakeSlice, Car, CircleEuro, Clock3, Palmtree, Plane, ShoppingBag, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { budgetCategories, days, trip } from '../data/trip'
 import { StatusBadge } from '../components/StatusBadge'
-
-const routeIcons = [Plane, Palmtree, Palmtree, Sparkles, ShoppingBag]
 
 export function OverviewPage() {
   const birthday = days.find((day) => day.date === '2026-09-16')!
@@ -17,24 +14,23 @@ export function OverviewPage() {
           <h1>Thirteen days south of ordinary.</h1>
           <p className="hero-lede">A beach-first road trip through Puglia, a full day inside Matera’s stone city, and a final Naples shopping-and-pizza landing.</p>
           <div className="hero-actions">
-            <Link className="button primary" to="/day/2026-09-14">Start with arrival <ArrowRight /></Link>
+            <Link className="button primary" to="/day/2026-09-14">Start with arrival</Link>
             <Link className="button secondary" to="/map">See the route</Link>
           </div>
         </div>
         <div className="route-sketch" aria-label="Route from Naples to Puglia, Matera and back to Naples">
           <div className="route-line" aria-hidden="true" />
           {trip.route.map((stop, index) => {
-            const Icon = routeIcons[index] ?? Car
-            return <div className="route-stop" key={stop}><span><Icon /></span><strong>{stop}</strong><small>{index === 0 ? 'Land' : index === trip.route.length - 1 ? 'Fly home' : `${days.filter((day) => day.base.includes(stop.split(' ')[0])).length || 2} days`}</small></div>
+            return <div className="route-stop" key={stop}><span>{String(index + 1).padStart(2, '0')}</span><strong>{stop}</strong><small>{index === 0 ? 'Land' : index === trip.route.length - 1 ? 'Fly home' : `${days.filter((day) => day.base.includes(stop.split(' ')[0])).length || 2} days`}</small></div>
           })}
         </div>
       </section>
 
       <section className="trip-pulse" aria-label="Trip at a glance">
-        <div><Clock3 /><span><strong>12</strong> nights</span></div>
-        <div><Car /><span><strong>9</strong> rental days</span></div>
-        <div><Palmtree /><span><strong>3</strong> beach chances</span></div>
-        <div><CircleEuro /><span><strong>€{trip.budgetBufferEur}</strong> buffer</span></div>
+        <div><small>Stay</small><span><strong>12</strong> nights</span></div>
+        <div><small>Drive</small><span><strong>9</strong> rental days</span></div>
+        <div><small>Coast</small><span><strong>3</strong> beach chances</span></div>
+        <div><small>Budget</small><span><strong>€{trip.budgetBufferEur}</strong> buffer</span></div>
       </section>
 
       <section className="section-heading">
@@ -51,7 +47,7 @@ export function OverviewPage() {
               <p>{day.subtitle}</p>
               <span className="day-card-meta">{day.base} · €{day.cash.recommendedCarryEur} cash ceiling</span>
             </div>
-            <ArrowRight aria-hidden="true" />
+            <span className="day-card-action">Open day</span>
           </Link>
         ))}
       </div>
@@ -60,9 +56,9 @@ export function OverviewPage() {
         <div className="birthday-confetti" aria-hidden="true"><i /><i /><i /><i /><i /></div>
         <div>
           <p className="eyebrow">Wednesday · 16 September</p>
-          <h2><CakeSlice /> Rinat turns 27 by the Adriatic</h2>
+          <h2>Rinat turns 27 by the Adriatic</h2>
           <p>Boat caves and a swim, a slow afternoon, sunset cake and prosecco, then a cooking class with dinner, local wine and limoncello.</p>
-          <p className="truth-note"><strong>Honest status:</strong> the evening time and party treatment are requested targets, not confirmed promises.</p>
+          <p className="truth-note"><strong>Current status:</strong> the evening time and party treatment still need confirmation.</p>
         </div>
         <div className="birthday-price"><small>planned for two</small><strong>€243–248</strong><Link className="button primary" to={`/day/${birthday.date}`}>Open birthday plan</Link></div>
       </section>
