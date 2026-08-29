@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 const root = resolve(import.meta.dirname, '..')
@@ -12,10 +12,12 @@ const publicSource = [
   'public/favicon.svg',
   'src/App.tsx',
   'src/components/Layout.tsx',
+  'src/components/DestinationPhoto.tsx',
   'src/components/RouteMap.tsx',
   'src/components/Timeline.tsx',
   'src/components/WeatherPanel.tsx',
   'src/data/trip.ts',
+  'src/data/images.ts',
   'src/pages/AboutPage.tsx',
   'src/pages/BookingsPage.tsx',
   'src/pages/BudgetPage.tsx',
@@ -58,7 +60,16 @@ requirePattern('privacy footer link is missing', read('src/components/Layout.tsx
 requirePattern('terms footer link is missing', read('src/components/Layout.tsx'), /to="\/terms"/)
 requirePattern('warm paper token is missing', styles, /--paper:\s*#f3ecda/i)
 requirePattern('earth accent token is missing', styles, /--clay:\s*#9d402e/i)
+requirePattern('AVIF responsive source is missing', read('src/components/DestinationPhoto.tsx'), /type="image\/avif"/)
+requirePattern('WebP responsive source is missing', read('src/components/DestinationPhoto.tsx'), /type="image\/webp"/)
+requirePattern('visible photo credit is missing', read('src/components/DestinationPhoto.tsx'), /Photo: \{photo\.author\}/)
 
-const result = { passed: failures.length === 0, checks: 23, failures }
+for (const id of ['polignano', 'lecce', 'salento', 'matera', 'naples']) {
+  for (const suffix of ['960.avif', '1600.avif', '960.webp', '1600.webp']) {
+    if (!existsSync(resolve(root, `public/images/${id}-${suffix}`))) failures.push(`optimized photo asset is missing: ${id}-${suffix}`)
+  }
+}
+
+const result = { passed: failures.length === 0, checks: 27, failures }
 process.stdout.write(`${JSON.stringify(result, null, 2)}\n`)
 if (failures.length > 0) process.exitCode = 1

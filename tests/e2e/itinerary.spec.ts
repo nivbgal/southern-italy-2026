@@ -92,4 +92,15 @@ test.describe('public itinerary', () => {
     await expect(page.getByRole('link', { name: 'Privacy' })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Terms' })).toBeVisible()
   })
+
+  test('shows responsive destination photography with visible credits', async ({ page }) => {
+    await openRoute(page)
+    const hero = page.locator('img[data-photo-id="polignano"]')
+    await expect(hero).toBeVisible()
+    await expect(hero).toHaveAttribute('alt', /Polignano/i)
+    await expect(page.locator('source[type="image/avif"]')).toHaveCount(1)
+    await openRoute(page, '/about')
+    await expect(page.locator('main')).toContainText('ParisTaras')
+    await expect(page.locator('main')).toContainText('CC BY-SA 4.0')
+  })
 })

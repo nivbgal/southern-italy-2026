@@ -36,6 +36,17 @@ for (const place of ['Naples', 'Polignano', 'Lecce', 'Matera']) {
   requireContent('route coverage', place)
 }
 
+for (const creator of ['ParisTaras', 'acediscovery', 'Sailko', 'Camelia.boban', 'Maurizio Moro5153']) {
+  requireContent('photo attribution', creator)
+}
+
+for (const id of ['polignano', 'lecce', 'salento', 'matera', 'naples']) {
+  for (const suffix of ['960.avif', '1600.avif', '960.webp', '1600.webp']) {
+    const expected = join(root, 'images', `${id}-${suffix}`)
+    if (!files.includes(expected)) failures.push(`optimized photo asset is missing: ${id}-${suffix}`)
+  }
+}
+
 requireContent('outbound departure correction', '20:20')
 requireContent('return departure', '07:00')
 

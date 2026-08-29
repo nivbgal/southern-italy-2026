@@ -284,16 +284,27 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
 .page-intro h1, .hero-copy h1 { max-width: 13ch; margin: 0; font-family: var(--font-display); font-size: clamp(2.75rem, 7vw, 6.25rem); font-weight: 500; line-height: 0.94; letter-spacing: -0.045em; }
 .page-intro p:last-child, .hero-lede { max-width: var(--measure); margin: 0; color: var(--ink-muted); font-size: clamp(1.02rem, 2vw, 1.2rem); }
 
-.hero-panel { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; min-height: min(48rem, 76vh); padding-block: clamp(3.5rem, 8vw, 7rem); }
-.hero-copy { display: grid; gap: 1.2rem; }
+.hero-panel { display: grid; grid-template-columns: minmax(20rem, 0.82fr) minmax(0, 1.18fr); gap: clamp(2rem, 5vw, 4rem); align-items: stretch; min-height: min(46rem, 78vh); padding-block: clamp(3.5rem, 7vw, 6rem) 2.25rem; }
+.hero-copy { display: grid; align-content: center; gap: 1.2rem; }
 .hero-actions, .state-actions, .icon-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
 
-.route-sketch { position: relative; display: grid; gap: 0.95rem; min-height: 23rem; align-content: center; padding: 1.5rem; border: 1px solid var(--ink); background: var(--ochre); }
-.route-line { position: absolute; top: 3.5rem; bottom: 3.5rem; left: 2.61rem; width: 1px; background: var(--ink); opacity: 0.45; }
-.route-stop { position: relative; z-index: 1; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; align-items: center; gap: 0.75rem; }
+.destination-photo { min-width: 0; margin: 0; }
+.destination-photo picture { display: block; min-height: 0; overflow: hidden; border: 1px solid var(--ink); background: var(--paper-deep); }
+.destination-photo img { width: 100%; height: 100%; object-fit: cover; object-position: var(--photo-position, 50% 50%); }
+.destination-photo figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; min-height: 2.5rem; padding: 0.65rem 0; border-bottom: 1px solid var(--rule); color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.58rem; line-height: 1.45; }
+.destination-photo figcaption span { color: var(--ink); font-weight: 750; letter-spacing: 0.06em; text-transform: uppercase; }
+.destination-photo figcaption a { color: var(--ink-muted); text-align: end; }
+.destination-photo-hero { display: grid; min-height: clamp(31rem, 49vw, 41rem); grid-template-rows: minmax(0, 1fr) auto; }
+.destination-photo-day { margin-bottom: 1.25rem; }
+.destination-photo-day picture { aspect-ratio: 16 / 5.25; }
+
+.route-sketch { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; align-content: center; padding: 1.25rem; border: 1px solid var(--ink); background: var(--ochre); }
+.route-line { position: absolute; top: 2.38rem; right: 3rem; left: 3rem; height: 1px; background: var(--ink); opacity: 0.45; }
+.route-stop { position: relative; z-index: 1; display: grid; min-width: 0; grid-template-columns: 2.25rem minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; gap: 0.12rem 0.7rem; padding-inline-end: 0.75rem; }
 .route-stop > span, .section-number { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border: 1px solid var(--ink); border-radius: var(--edge); background: var(--paper-light); color: var(--ink); font-family: var(--font-mono); font-size: 0.62rem; font-weight: 800; }
-.route-stop strong { font-size: 0.92rem; }
-.route-stop small { color: var(--ink); font-family: var(--font-mono); font-size: 0.61rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.route-stop > span { grid-row: 1 / span 2; }
+.route-stop strong { overflow: hidden; font-size: 0.86rem; text-overflow: ellipsis; white-space: nowrap; }
+.route-stop small { grid-column: 2; color: var(--ink); font-family: var(--font-mono); font-size: 0.57rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 
 .trip-pulse { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--ink); }
 .trip-pulse > div { display: grid; min-height: 6.25rem; align-content: center; gap: 0.35rem; padding: 1rem clamp(0.75rem, 2vw, 1.5rem); border-inline-end: 1px solid var(--rule); }
@@ -341,7 +352,8 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
 .budget-meter { height: 0.7rem; overflow: hidden; border: 1px solid var(--ink); background: var(--paper-light); }
 .budget-meter > span { display: block; height: 100%; background: var(--clay); }
 
-.day-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: end; padding-block: clamp(3.75rem, 9vw, 7rem) 2rem; }
+.day-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: end; padding-block: clamp(3.5rem, 7vw, 5.75rem) 2rem; }
+.day-opening { display: flex; flex-direction: column; }
 .day-header h1 { max-width: 14ch; margin: 0.35rem 0 0.65rem; font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5.5rem); font-weight: 500; line-height: 0.95; letter-spacing: -0.045em; }
 .day-header p:last-child { max-width: var(--measure); margin: 0; color: var(--ink-muted); font-size: 1.03rem; }
 .day-location { display: grid; min-width: 13rem; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0.75rem; padding: 0.8rem 0; border-block: 1px solid var(--ink); }
@@ -509,6 +521,14 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
 .source-list > a > span:last-child { font-size: 0.7rem; font-weight: 750; text-decoration: underline; }
 .editorial-note { background: transparent; }
 
+.photo-credits { margin-top: clamp(4rem, 9vw, 7rem); }
+.photo-credits .section-heading { margin-top: 0; }
+.photo-credit-list { display: grid; border-top: 1px solid var(--rule); }
+.photo-credit-list article { display: grid; grid-template-columns: minmax(13rem, 0.42fr) minmax(10rem, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid var(--rule); }
+.photo-credit-list strong { font-family: var(--font-display); font-size: 1.05rem; }
+.photo-credit-list span { color: var(--ink-muted); font-size: 0.78rem; }
+.photo-credit-list article > div { display: flex; gap: 0.8rem; font-size: 0.7rem; font-weight: 700; }
+
 .policy-page { max-width: 52rem; }
 .policy-page .page-intro { padding-bottom: 2rem; }
 .policy-page > section { padding: 1.5rem 0; border-top: 1px solid var(--rule); }
@@ -526,7 +546,7 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
   .site-header { grid-template-columns: minmax(11rem, 1fr) auto; }
   .site-header > .top-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; overflow-x: auto; }
   .site-header > .trip-stamp { grid-column: 2; grid-row: 1; }
-  .hero-panel { grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.55fr); }
+  .hero-panel { grid-template-columns: minmax(18rem, 0.82fr) minmax(0, 1.18fr); }
   .venue-card { grid-template-columns: minmax(9rem, 0.32fr) minmax(0, 1fr); }
   .venue-card > .button { grid-column: 2; grid-row: auto; justify-self: start; }
   .fallback-grid article { grid-template-columns: minmax(9rem, 0.32fr) minmax(0, 1fr); }
@@ -548,9 +568,18 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
   .drive-card, .birthday-request, .private-note, .map-shell, .booking-card,
   .principles-grid .state-panel, .site-footer { grid-template-columns: minmax(0, 1fr); }
 
-  .hero-panel { min-height: 0; padding-block: 3.5rem; }
+  .hero-panel { min-height: 0; padding-block: 1.5rem 3.5rem; }
   .hero-copy h1, .page-intro h1 { font-size: clamp(2.7rem, 15vw, 4.35rem); }
-  .route-sketch { min-height: 20rem; }
+  .destination-photo-hero { order: -1; min-height: 0; }
+  .destination-photo-hero picture { aspect-ratio: 4 / 3; }
+  .destination-photo-day { order: -1; margin-top: 1.5rem; }
+  .destination-photo-day picture { aspect-ratio: 4 / 3; }
+  .day-header { padding-block: 2.25rem 2rem; }
+  .destination-photo figcaption { display: grid; gap: 0.2rem; }
+  .destination-photo figcaption a { text-align: start; }
+  .route-sketch { grid-template-columns: minmax(0, 1fr); gap: 0.85rem; min-height: 20rem; }
+  .route-line { top: 3rem; right: auto; bottom: 3rem; left: 2.36rem; width: 1px; height: auto; }
+  .route-stop { padding-inline-end: 0; }
   .trip-pulse, .day-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trip-pulse > div:nth-child(2), .day-meta > div:nth-child(2) { border-inline-end: 0; }
   .trip-pulse > div:nth-child(-n + 2), .day-meta > div:nth-child(-n + 2) { border-bottom: 1px solid var(--rule); }
@@ -585,6 +614,7 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
   .filter-tabs { justify-content: stretch; }
   .filter-tabs button { flex: 1 1 0; }
   .principles-grid .state-panel a { grid-column: 1; }
+  .photo-credit-list article { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
 
   .site-footer { gap: 0.8rem; }
   .site-footer > span:last-child { text-align: start; }

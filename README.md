@@ -15,6 +15,7 @@ Production: <https://nivbgal.github.io/southern-italy-2026/>
 - Device-local checklists, notes, favorites, spending and JSON export/import
 - Three-hour forecast cache using Open-Meteo when a date enters the reliable forecast window
 - Installable PWA shell and offline access to the itinerary and budget
+- Credited destination photography in responsive AVIF and WebP formats
 
 Flights are the only confirmed reservations in the initial dataset. Lodging, car and activities remain candidates until the travelers update their status on their own device.
 
@@ -47,6 +48,6 @@ The GitHub Pages workflow repeats the locked install, lint, typecheck, content v
 
 ## Source and freshness model
 
-The app's About view links directly to its official, local-editorial and evidence sources. Climate, traffic, opening hours, ratings and prices display a checked or seasonal date because they can change. Live forecasts replace seasonal expectations only within Open-Meteo's supported window.
+The app's About view links directly to its official, local-editorial and evidence sources. It also lists every photo creator, source file and reuse licence. Climate, traffic, opening hours, ratings and prices display a checked or seasonal date because they can change. Live forecasts replace seasonal expectations only within Open-Meteo's supported window.
 
 Design provenance and the rendered review are in [DESIGN.md](DESIGN.md). Release evidence is in [qa/](qa/).

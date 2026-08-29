@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "threshold": 0.95,
-  "generatedAt": "2026-08-29T22:06:00+03:00",
+  "generatedAt": "2026-08-29T22:35:00+03:00",
   "exactArtifact": {
     "sourceCommit": "Resolved from github.sha by the release workflow and embedded in the site footer",
     "deployedUrl": "https://nivbgal.github.io/southern-italy-2026/"
@@ -13,7 +13,7 @@
       "score": 1,
       "status": "passed",
       "evidence": [
-        "qa/commitment-ledger.json has 28 final-state requirements with implementation evidence",
+        "qa/commitment-ledger.json has 29 final-state requirements with implementation evidence",
         "qa/vibe-checklist.json has 30 itemized design dispositions with implementation evidence",
         "scripts/ledger-audit.mjs rejects pending or evidence-free implemented entries"
       ]
@@ -35,8 +35,8 @@
       "score": 1,
       "status": "passed",
       "evidence": [
-        "56/56 Playwright checks pass across four browser/device projects",
-        "Hash routes, policy pages, birthday state, budget exclusions, booking uncertainty and protected links are exercised",
+        "60/60 Playwright checks pass across four browser/device projects",
+        "Hash routes, policy pages, photography credits, birthday state, budget exclusions, booking uncertainty and protected links are exercised",
         "Device-local state supports persistence, export, import and reset without a backend"
       ]
     },
@@ -58,7 +58,7 @@
       "status": "passed",
       "evidence": [
         "Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet projects pass",
-        "The 320px overflow assertion passes and desktop/mobile screenshots were visually reviewed"
+        "The 320px overflow assertion passes and image-led desktop/mobile screenshots were visually reviewed"
       ]
     },
     {
@@ -81,8 +81,9 @@
       "evidence": [
         "The production build succeeds with a repository-safe base and lazy-loaded map bundle",
         "The PWA precaches only the app shell and itinerary assets, not map tiles or booking/navigation pages",
-        "scripts/vibe-audit.mjs passes 23 static design checks",
-        "Local production Lighthouse: performance 99, accessibility 100, best practices 100, SEO 100; LCP 1.9s, TBT 20ms, CLS 0",
+        "scripts/vibe-audit.mjs passes 27 static design and image checks",
+        "Five credited destination photos ship as local 960px and 1600px AVIF and WebP assets",
+        "Local production Lighthouse: performance 97, accessibility 100, best practices 100, SEO 100; LCP 2.4s, TBT 20ms, CLS 0",
         "The Pages workflow deploys only after all checks and performs an unauthenticated production smoke test"
       ]
     }

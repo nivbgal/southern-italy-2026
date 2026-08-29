@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { budgetCategories, days, trip } from '../data/trip'
+import { tripPhotos } from '../data/images'
+import { DestinationPhoto } from '../components/DestinationPhoto'
 import { StatusBadge } from '../components/StatusBadge'
 
 export function OverviewPage() {
@@ -18,12 +20,14 @@ export function OverviewPage() {
             <Link className="button secondary" to="/map">See the route</Link>
           </div>
         </div>
-        <div className="route-sketch" aria-label="Route from Naples to Puglia, Matera and back to Naples">
-          <div className="route-line" aria-hidden="true" />
-          {trip.route.map((stop, index) => {
-            return <div className="route-stop" key={stop}><span>{String(index + 1).padStart(2, '0')}</span><strong>{stop}</strong><small>{index === 0 ? 'Land' : index === trip.route.length - 1 ? 'Fly home' : `${days.filter((day) => day.base.includes(stop.split(' ')[0])).length || 2} days`}</small></div>
-          })}
-        </div>
+        <DestinationPhoto photo={tripPhotos.polignano} variant="hero" eager />
+      </section>
+
+      <section className="route-sketch" aria-label="Route from Naples to Puglia, Matera and back to Naples">
+        <div className="route-line" aria-hidden="true" />
+        {trip.route.map((stop, index) => {
+          return <div className="route-stop" key={stop}><span>{String(index + 1).padStart(2, '0')}</span><strong>{stop}</strong><small>{index === 0 ? 'Land' : index === trip.route.length - 1 ? 'Fly home' : `${days.filter((day) => day.base.includes(stop.split(' ')[0])).length || 2} days`}</small></div>
+        })}
       </section>
 
       <section className="trip-pulse" aria-label="Trip at a glance">

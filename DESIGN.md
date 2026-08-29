@@ -15,6 +15,7 @@ The Refero catalog was searched with these terms:
 - `personal southern Italy road trip itinerary editorial travel journal mobile dense schedule map trustworthy human`
 - `printed road atlas personal travel schedule sharp rules terracotta editorial practical mobile`
 - `travel gazette paper sharp editorial`
+- `personal southern Italy itinerary editorial travel photography field guide premium mobile`
 
 ### Anchor: Kobu
 
@@ -29,6 +30,13 @@ The Refero catalog was searched with these terms:
 - Role: map and list structure.
 - Use: a map and route list that work as peers.
 - Reject: dark UI, glass effects, and dense floating controls.
+
+### Photography donor: Munro Partners
+
+- Refero: <https://styles.refero.design/style/d2e327b2-1181-4203-82a6-2dc15a72078a>
+- Role: image scale and editorial pacing.
+- Use: one natural, high-resolution landscape plate at a section opening. Let the photograph carry the sense of place.
+- Reject: text placed over detailed scenery, rounded image frames, and remote runtime images.
 
 No Three UI layer is used. It does not improve the schedule or map. The birthday page uses one short CSS confetti effect. It stops after one run. Reduced motion removes it.
 
@@ -85,6 +93,17 @@ The site does not use a stock icon set. It uses text, numbers, a two-letter mark
 - Mobile uses one content column and a four-item bottom nav.
 
 The site does not use a bento dashboard. It does not use three generic feature cards or three pricing tiers.
+
+### Photography
+
+- The overview uses one dominant Polignano image beside the trip story.
+- Every daily page opens with a photo tied to that day or base.
+- Mobile shows the image before the long headline so the place appears early.
+- Images use local 960px and 1600px AVIF and WebP files.
+- The browser crops images with `object-fit`; source files remain unchanged.
+- Captions name the place, creator, and licence.
+- The About page contains the full source and licence record.
+- Photographs have square edges, no overlay, no filter, and no shadow.
 
 ### Actions
 
@@ -174,6 +193,7 @@ The repository includes `scripts/vibe-audit.mjs`. It rejects these patterns in t
 - hover motion, em dashes, and false-contrast slogans;
 - missing weather or map skeletons;
 - missing privacy or terms routes.
+- missing responsive image formats, local image assets, or photo credits.
 
 The item-by-item record is in `qa/vibe-checklist.json`.
 
@@ -201,8 +221,8 @@ The review used the overview and birthday pages at 1440px and iPhone 13 size. It
 | Product clarity and action order | 19 / 20 | Route, first action, date strip, and budget read in order. |
 | Information order | 15 / 15 | Time, place, status, cost, and movement follow one order. |
 | Type | 14 / 15 | Serif, sans, and mono roles stay clear on both widths. |
-| Space and layout | 14 / 15 | Flat rows replace card grids. Mobile keeps one reading path. |
+| Space and layout | 15 / 15 | A dominant image plate balances the hero. Mobile places the destination before long copy. |
 | Components and states | 14 / 15 | Loading, offline, selected, saved, error, and birthday states share one system. |
-| Original system | 10 / 10 | The numbered route, ruled rows, clay actions, and wine birthday field form a specific trip identity. |
+| Original system | 10 / 10 | The numbered route, ruled rows, credited destination plates, and wine birthday field form a specific trip identity. |
 | Access and responsive behavior | 10 / 10 | Focus, target size, reduced motion, and narrow layouts pass automated checks. |
-| **Total** | **96 / 100** | Passes the 80-point gate. |
+| **Total** | **97 / 100** | Passes the 80-point gate. |

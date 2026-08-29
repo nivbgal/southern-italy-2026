@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { Timeline } from '../components/Timeline'
 import { WeatherPanel } from '../components/WeatherPanel'
+import { DestinationPhoto } from '../components/DestinationPhoto'
+import { photoForDay } from '../data/images'
 import { days, lodging, venues } from '../data/trip'
 import { useTripState } from '../state/TripStateContext'
 
@@ -17,17 +19,22 @@ export function DayPage() {
 
   const hotel = lodging.find((item) => item.id === day.overnightLodgingId)
   const featured = day.featuredVenueIds.map((id) => venues.find((venue) => venue.id === id)).filter(Boolean)
+  const photo = photoForDay(day)
 
   return (
     <article className={day.date === '2026-09-16' ? 'is-birthday-page' : undefined}>
-      <header className="day-header">
-        <div>
-          <p className="eyebrow">Day {day.dayNumber} · {day.weekday}, {Number(day.date.slice(-2))} September</p>
-          <h1>{day.title}</h1>
-          <p>{day.subtitle}</p>
-        </div>
-        <div className="day-location"><small>Base</small><span>Sleep tonight<strong>{day.base}</strong></span></div>
-      </header>
+      <div className="day-opening">
+        <header className="day-header">
+          <div>
+            <p className="eyebrow">Day {day.dayNumber} · {day.weekday}, {Number(day.date.slice(-2))} September</p>
+            <h1>{day.title}</h1>
+            <p>{day.subtitle}</p>
+          </div>
+          <div className="day-location"><small>Base</small><span>Sleep tonight<strong>{day.base}</strong></span></div>
+        </header>
+
+        <DestinationPhoto photo={photo} variant="day" eager />
+      </div>
 
       <section className="day-meta">
         <div><small>Rise</small><span>Sunrise<strong>{day.sun.sunrise}</strong></span></div>

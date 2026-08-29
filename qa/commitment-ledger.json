@@ -186,7 +186,7 @@
       "requirement": "Use a documented Refero-derived visual system and pass its design scorecard at 80 or higher.",
       "destination": "DESIGN.md and rendered site",
       "status": "implemented",
-      "evidence": ["DESIGN.md Refero rationale and rendered score 96/100", "src/styles.css implementation"]
+      "evidence": ["DESIGN.md Refero rationale and rendered score 97/100", "src/styles.css implementation"]
     },
     {
       "id": "DES-02",
@@ -194,7 +194,15 @@
       "requirement": "Apply the full 30-item anti-vibe-code checklist without removing trip facts or functions.",
       "destination": "Public app, active stylesheet, policies, loading states, and QA",
       "status": "implemented",
-      "evidence": ["qa/vibe-checklist.json has 30 itemized final dispositions", "scripts/vibe-audit.mjs passes 23 static checks", "DESIGN.md rendered review score 96/100", "Playwright cross-browser and accessibility checks"]
+      "evidence": ["qa/vibe-checklist.json has 30 itemized final dispositions", "scripts/vibe-audit.mjs passes 27 static checks", "DESIGN.md rendered review score 97/100", "Playwright cross-browser and accessibility checks"]
+    },
+    {
+      "id": "IMG-01",
+      "source": "User request to add high-quality pictures and make the itinerary look professionally designed and executed",
+      "requirement": "Use strong destination photography as part of the editorial layout, keep it responsive and offline-ready, and publish a clear creator and licence record.",
+      "destination": "Overview hero, every daily page, About photo credits, and PWA assets",
+      "status": "implemented",
+      "evidence": ["src/components/DestinationPhoto.tsx responsive AVIF and WebP component", "src/data/images.ts creator, licence, source and alt records", "public/images optimized local assets", "tests/e2e/itinerary.spec.ts photography and credit test"]
     },
     {
       "id": "QA-01",
@@ -202,7 +210,7 @@
       "requirement": "Pass the 0.95 truth threshold, automated content tests, accessibility, responsive, cross-browser, privacy and deployed-site verification.",
       "destination": "CI and QA report",
       "status": "implemented",
-      "evidence": ["qa/verification-report.json", "56/56 Playwright checks across four projects", ".github/workflows/deploy.yml post-deploy smoke test"]
+      "evidence": ["qa/verification-report.json", "60/60 Playwright checks across four projects", ".github/workflows/deploy.yml post-deploy smoke test"]
     },
     {
       "id": "PRIV-01",
@@ -231,7 +239,7 @@
   ],
   "final_verification": [
     "npm run verify",
-    "56/56 Playwright tests across Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet",
+    "60/60 Playwright tests across Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet",
     "zero serious or critical axe findings on overview, birthday, map, budget and bookings",
     "built-artifact privacy and base-path audit",
     "unauthenticated production smoke test is enforced after deployment"
