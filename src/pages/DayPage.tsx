@@ -1,15 +1,19 @@
-import { ArrowLeft, ArrowRight, Car, CircleEuro, CloudRain, Navigation, ShieldAlert, Sunrise, Sunset } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowLeft, ArrowRight, Car, CircleEuro, ClipboardCopy, CloudRain, Navigation, ShieldAlert, Sunrise, Sunset } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { Timeline } from '../components/Timeline'
 import { WeatherPanel } from '../components/WeatherPanel'
 import { days, lodging, venues } from '../data/trip'
 import { useTripState } from '../state/TripStateContext'
 
+const birthdayRequest = `Hello, I would like to book the evening cooking class on 16 September 2026 for two people. It is Rinat's 27th birthday. Can you offer a 19:30 start, a small cake presentation, lively music, local wine, and a safe, playful flour moment? Please confirm the total price for two, start time, duration, cancellation terms, and the birthday details that you can guarantee. We will book after your reply. Thank you, Niv.`
+
 export function DayPage() {
   const { date } = useParams()
   const index = days.findIndex((day) => day.date === date)
   const day = days[index]
   const { state, patch } = useTripState()
+  const [birthdayMessageStatus, setBirthdayMessageStatus] = useState('')
   if (!day) return <Navigate to="/" replace />
 
   const hotel = lodging.find((item) => item.id === day.overnightLodgingId)
@@ -51,6 +55,15 @@ export function DayPage() {
           {day.driving.parking && <small><strong>Parking:</strong> {day.driving.parking}</small>}
         </section>
       </div>
+
+      {day.date === '2026-09-16' && (
+        <section className="birthday-request">
+          <div><p className="eyebrow">Draft only · approval needed before sending</p><h2>Message for Pugliamare</h2><p>The class page includes dinner, wine and limoncello. It does not promise a party.</p></div>
+          <textarea readOnly value={birthdayRequest} aria-label="Birthday request draft" />
+          <button className="button primary" type="button" onClick={() => { if (!navigator.clipboard) { setBirthdayMessageStatus('Copy is unavailable. Select the text above.'); return } void navigator.clipboard.writeText(birthdayRequest).then(() => setBirthdayMessageStatus('Copied. Review it before you send it.')).catch(() => setBirthdayMessageStatus('Copy failed. Select the text above.')) }}><ClipboardCopy /> Copy request</button>
+          {birthdayMessageStatus && <p role="status">{birthdayMessageStatus}</p>}
+        </section>
+      )}
 
       <section className="timeline-section">
         <div className="section-heading"><div><p className="eyebrow">The lived-in version</p><h2>Hour by hour</h2></div><p>Tap the checks as the day unfolds. They stay only on this device.</p></div>

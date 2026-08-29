@@ -1930,6 +1930,44 @@ button.button {
   line-height: 1;
 }
 
+.birthday-request {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid rgba(72, 60, 255, 0.3);
+  border-radius: var(--radius-panel);
+  background: var(--iris-soft);
+}
+
+.birthday-request h2 {
+  margin: 0.35rem 0;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+}
+
+.birthday-request p {
+  margin: 0;
+  color: var(--lagoon-soft);
+}
+
+.birthday-request textarea {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 9rem;
+  resize: vertical;
+  border-color: rgba(72, 60, 255, 0.35);
+  background: var(--paper-strong);
+  color: var(--lagoon);
+  line-height: 1.55;
+}
+
+.birthday-request > p[role="status"] {
+  align-self: center;
+  font-size: 0.8rem;
+}
+
 .truth-note,
 .map-truth,
 .traffic-note {
@@ -2573,6 +2611,46 @@ button.button {
   color: var(--lagoon-soft);
 }
 
+.lodging-card .quote-note {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.85rem 0;
+  padding: 0.75rem 0.85rem;
+  border-left: 3px solid var(--iris);
+  background: var(--mint-soft);
+  color: var(--lagoon);
+  font-size: 0.78rem;
+}
+
+.lodging-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0.8rem 0;
+  border-top: 1px solid var(--ink-rule);
+}
+
+.lodging-facts > div {
+  padding: 0.7rem 0.75rem 0.7rem 0;
+  border-bottom: 1px solid var(--ink-rule);
+}
+
+.lodging-facts dt {
+  margin-bottom: 0.18rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lodging-facts dd {
+  margin: 0;
+  color: var(--lagoon-soft);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
 .booking-copy ul,
 .lodging-card ul {
   margin-bottom: 0.6rem;
@@ -2677,6 +2755,26 @@ button.button {
   padding-left: 1.2rem;
   color: var(--lagoon-soft);
   font-size: 0.84rem;
+}
+
+.car-alternatives {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(131, 84, 0, 0.3);
+}
+
+.car-alternatives h3 {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.car-alternatives p {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.55rem 0;
+  color: var(--lagoon-soft);
+  font-size: 0.8rem;
 }
 
 .map-shell > .map-list {
@@ -3411,6 +3509,10 @@ button.button {
 
   .booking-action > span {
     justify-items: start;
+  }
+
+  .lodging-facts {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .car-rental-card dl {

@@ -24,7 +24,7 @@
       "status": "passed-with-timestamped-estimates",
       "evidence": [
         "src/data/validation.ts enforces 13 dates, 12 nights, exact flights, route, price state, source resolution and recommendation thresholds",
-        "tests/unit/trip-data.test.ts passes nine canonical data-invariant checks",
+        "tests/unit/trip-data.test.ts passes ten canonical data-invariant checks",
         "Prices, ratings, weather and traffic remain visibly timestamped or labeled seasonal/typical rather than guaranteed"
       ]
     },

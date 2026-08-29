@@ -62,6 +62,21 @@ describe('trip content integrity', () => {
     })
   })
 
+  it('keeps every checked lodging quote below the nightly cap with visible terms', () => {
+    for (const stay of lodging) {
+      expect(stay.priceStatus, stay.name).toBe('live-quote')
+      expect(stay.quoteCheckedOn, stay.name).toBe('2026-08-29')
+      expect(stay.nightlyEquivalentEur, stay.name).toBeLessThan(200)
+      expect(stay.totalEstimateEur / stay.nights, stay.name).toBeCloseTo(stay.nightlyEquivalentEur, 2)
+      expect(stay.taxesAndFees, stay.name).not.toBe('')
+      expect(stay.cancellationTerms, stay.name).not.toBe('')
+      expect(stay.paymentTerms, stay.name).not.toBe('')
+      expect(stay.checkInConstraints, stay.name).not.toBe('')
+      expect(stay.parkingPlan, stay.name).not.toBe('')
+      expect(stay.stairsAndLuggage, stay.name).not.toBe('')
+    }
+  })
+
   it('keeps strict Maps thresholds for recommended restaurants and attractions', () => {
     const governedVenues = venues.filter((venue) =>
       ['restaurant', 'attraction'].includes(venue.kind),
@@ -114,6 +129,9 @@ describe('trip content integrity', () => {
       expect(stay.priceStatus).not.toBe('confirmed')
     }
     expect(trip.car.priceStatus).toBe('shortlist-price-needs-checkout-verification')
+    expect(trip.car.protectedBudgetEur).toBeLessThanOrEqual(370)
+    expect(trip.car.deskProcess).toMatch(/not verified|confirm/i)
+    expect(trip.car.liabilityCover).toMatch(/not verified|does not replace/i)
   })
 
   it('defines transport, weather, sun, cash and fallbacks for every day', () => {

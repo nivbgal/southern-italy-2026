@@ -4,7 +4,7 @@ import { trip } from '../data/trip'
 export function AboutPage() {
   return (
     <>
-      <header className="page-intro"><p className="eyebrow">How to read this guide</p><h1>About this itinerary.</h1><p>Useful certainty, honest uncertainty: this is a public planning tool, not a reservation system. It tells you what is confirmed, what was quoted, and what still needs a human check.</p></header>
+      <header className="page-intro"><p className="eyebrow">How to read this guide</p><h1>About this itinerary</h1><p>This public tool plans the trip. It cannot reserve anything. Each item shows its current status.</p></header>
       <div className="principles-grid">
         <article className="state-panel"><ShieldCheck /><h2>Status language</h2><p><strong>Confirmed</strong> means booked. <strong>Live quote</strong> means researched but not reserved. <strong>Requested</strong> means an operator still needs to reply. <strong>Typical</strong> means climate or traffic, not live conditions.</p></article>
         <article className="state-panel"><RefreshCw /><h2>Freshness</h2><p>Ratings, prices and hours were assembled on {trip.dataAsOf}. Reopen checkout pages and Maps immediately before reserving or visiting.</p></article>

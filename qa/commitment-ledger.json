@@ -82,7 +82,7 @@
       "requirement": "Recommend mid-range or apartment-style lodging below EUR 200 per night for the room and label every option unbooked unless confirmed.",
       "destination": "Bookings and daily lodging cards",
       "status": "implemented",
-      "evidence": ["src/data/trip.ts lodging candidates", "tests/unit/trip-data.test.ts lodging-status assertions", "src/pages/BookingsPage.tsx"]
+      "evidence": ["src/data/trip.ts exact-date lodging quotes checked 2026-08-29", "tests/unit/trip-data.test.ts nightly-cap and terms assertions", "src/pages/BookingsPage.tsx"]
     },
     {
       "id": "CAR-01",

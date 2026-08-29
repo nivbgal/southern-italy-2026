@@ -30,6 +30,7 @@ export interface Source {
     | 'local-guidance'
     | 'rating-evidence'
     | 'booking-search'
+    | 'exchange-rate'
   accessedOn: ISODate
   confidence: Confidence
   note?: string
@@ -180,11 +181,19 @@ export interface LodgingOption {
   nights: number
   status: PlanningStatus
   totalEstimateEur: number
-  priceStatus: 'live-price-required' | 'estimate' | 'confirmed'
+  nightlyEquivalentEur: number
+  priceStatus: 'live-price-required' | 'live-quote' | 'estimate' | 'confirmed'
+  quoteCheckedOn: ISODate
+  quoteDisplay: string
   bookingUrl: string
   bookingSourceId: string
   roomStyle: string
   parkingPlan: string
+  taxesAndFees: string
+  cancellationTerms: string
+  paymentTerms: string
+  checkInConstraints: string
+  stairsAndLuggage: string
   notes: string[]
 }
 
@@ -204,7 +213,7 @@ export interface BookingItem {
   endDate?: ISODate
   status: PlanningStatus
   priceEurForTwo?: number
-  priceStatus?: 'confirmed' | 'estimate' | 'from' | 'target' | 'excluded'
+  priceStatus?: 'confirmed' | 'live-quote' | 'estimate' | 'from' | 'target' | 'excluded'
   sourceUrl?: string
   sourceIds?: string[]
   action: string
@@ -230,6 +239,8 @@ export interface CarPlan {
   excessEur: number | null
   fuelPolicy: string
   mileage: string
+  deskProcess: string
+  liabilityCover: string
   requirements: string[]
   alternatives: Array<{
     model: string

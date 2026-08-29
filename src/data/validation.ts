@@ -152,6 +152,28 @@ export const validateTripData = (): ValidationResult => {
     if (!stay.bookingUrl.startsWith('https://')) {
       addIssue(issues, 'error', 'unsafe-booking-url', `${stay.name} booking URL must use HTTPS.`, `lodging[${index}].bookingUrl`)
     }
+    if (stay.nightlyEquivalentEur >= 200) {
+      addIssue(issues, 'error', 'lodging-nightly-cap', `${stay.name} is not below the €200 nightly cap.`, `lodging[${index}].nightlyEquivalentEur`)
+    }
+    if (Math.abs(stay.totalEstimateEur / stay.nights - stay.nightlyEquivalentEur) > 0.01) {
+      addIssue(issues, 'error', 'lodging-nightly-math', `${stay.name} has an inconsistent nightly equivalent.`, `lodging[${index}].nightlyEquivalentEur`)
+    }
+    if (stay.priceStatus === 'live-quote' && !stay.quoteCheckedOn) {
+      addIssue(issues, 'error', 'missing-quote-date', `${stay.name} needs a checked date for its live quote.`, `lodging[${index}].quoteCheckedOn`)
+    }
+    for (const [field, value] of Object.entries({
+      quoteDisplay: stay.quoteDisplay,
+      taxesAndFees: stay.taxesAndFees,
+      cancellationTerms: stay.cancellationTerms,
+      paymentTerms: stay.paymentTerms,
+      checkInConstraints: stay.checkInConstraints,
+      parkingPlan: stay.parkingPlan,
+      stairsAndLuggage: stay.stairsAndLuggage,
+    })) {
+      if (!value.trim()) {
+        addIssue(issues, 'error', 'missing-lodging-term', `${stay.name} is missing ${field}.`, `lodging[${index}].${field}`)
+      }
+    }
   })
 
   venues.forEach((venue, index) => {
@@ -218,6 +240,13 @@ export const validateTripData = (): ValidationResult => {
   }
   if (bookings.find((booking) => booking.id === 'flight-nap-tlv')?.status !== 'booked') {
     addIssue(issues, 'error', 'return-flight-status', 'Return flight must be present and booked.', 'bookings.flight-nap-tlv')
+  }
+
+  if (!trip.car.deskProcess.trim() || !trip.car.liabilityCover.trim()) {
+    addIssue(issues, 'error', 'missing-car-terms', 'The car plan must disclose desk or shuttle and liability status.', 'trip.car')
+  }
+  if (trip.car.protectedBudgetEur > 370) {
+    addIssue(issues, 'error', 'car-budget-cap', 'The protected car budget exceeds €370.', 'trip.car.protectedBudgetEur')
   }
 
   const serialized = JSON.stringify({ trip, days, venues, lodging, bookings, budgetCategories })

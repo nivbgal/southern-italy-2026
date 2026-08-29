@@ -22,7 +22,7 @@ export function BudgetPage() {
 
   return (
     <>
-      <header className="page-intro"><p className="eyebrow">The non-negotiable ceiling</p><h1>Budget €3,000 for two, with the truth visible.</h1><p>Quotes are not bookings, deposits are not spending, and shopping is Rinat’s separate universe.</p></header>
+      <header className="page-intro"><p className="eyebrow">Ground-trip limit</p><h1>Budget: €3,000 for two</h1><p>Flights and personal shopping are excluded. The rental hold is temporary credit use.</p></header>
       <section className="budget-hero">
         <div><CircleEuro /><span>Planned<strong>€{planned.toLocaleString()}</strong></span></div>
         <div><Banknote /><span>Entered actuals<strong>€{actual.toLocaleString()}</strong></span></div>
