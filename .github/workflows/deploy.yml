@@ -1,0 +1,119 @@
+name: Verify and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  PAGES_BASE: /${{ github.event.repository.name }}/
+
+jobs:
+  verify-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Lint source
+        run: npm run lint
+
+      - name: Type-check source
+        run: npm run typecheck
+
+      - name: Validate trip data
+        run: npx vitest run --config vitest.config.ts
+
+      - name: Build with repository-safe base path
+        run: npm run build -- --base="$PAGES_BASE"
+
+      - name: Audit built content and privacy
+        run: node scripts/site-audit.mjs --root dist --base "$PAGES_BASE"
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run cross-browser and accessibility tests
+        run: npx playwright test --config playwright.config.ts
+
+      - name: Audit commitment ledger
+        run: node scripts/ledger-audit.mjs qa/commitment-ledger.json
+
+      - name: Enforce 0.95 verification threshold
+        run: node scripts/verification-gate.mjs qa/verification-report.json
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload verified Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: verify-and-build
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  verify-deployed-site:
+    runs-on: ubuntu-latest
+    needs: deploy
+    timeout-minutes: 10
+    env:
+      DEPLOYED_BASE_URL: ${{ needs.deploy.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Wait for public Pages propagation
+        run: curl --fail --location --output /dev/null --retry 8 --retry-all-errors --retry-delay 5 "$DEPLOYED_BASE_URL"
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Smoke-test the unauthenticated deployed URL
+        run: npx playwright test --config playwright.config.ts --project chromium-desktop

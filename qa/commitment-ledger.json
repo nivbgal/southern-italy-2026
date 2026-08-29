@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "deliverable_id": "southern-italy-2026-public-itinerary",
+  "baseline": "User conversation through 2026-08-29 and timestamped sources in src/data/trip.ts",
+  "final_artifact": "GitHub Pages deployment for nivbgal/southern-italy-2026",
+  "requirements": [
+    {
+      "id": "FLT-01",
+      "source": "User correction: outbound takes off from TLV at 20:20",
+      "requirement": "Show 14 Sep 2026 20:20 as the TLV departure time, never as Naples arrival.",
+      "destination": "Arrival-day timeline",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts arrival timeline", "tests/unit/trip-data.test.ts corrected-flight assertion"]
+    },
+    {
+      "id": "FLT-02",
+      "source": "User-provided booked return flight",
+      "requirement": "Show Naples to TLV departure on 26 Sep 2026 at 07:00 and a realistic airport transfer buffer.",
+      "destination": "Sep 26 timeline",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts Sep 26 timeline", "tests/unit/trip-data.test.ts return-flight assertion"]
+    },
+    {
+      "id": "ROUTE-01",
+      "source": "Accepted revised outline",
+      "requirement": "Use the Puglia-first route Naples, Polignano a Mare, Lecce, Matera, Naples without an Amalfi stay.",
+      "destination": "Overview, map, and day routes",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts trip.route", "tests/unit/trip-data.test.ts route assertion", "src/pages/MapPage.tsx"]
+    },
+    {
+      "id": "ROUTE-02",
+      "source": "Accepted revised outline",
+      "requirement": "Represent 13 calendar days from 14 through 26 September and 12 continuous lodging nights.",
+      "destination": "All-days and lodging views",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts days and lodging", "tests/unit/trip-data.test.ts day and lodging continuity assertions"]
+    },
+    {
+      "id": "ROUTE-03",
+      "source": "User request for Matera",
+      "requirement": "Stay two nights in Matera and provide one complete day there.",
+      "destination": "Sep 22-24 pages",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts Matera stay and Sep 22-24 day plans"]
+    },
+    {
+      "id": "BDAY-01",
+      "source": "User birthday requirement",
+      "requirement": "Make Sep 16 a special birthday with a lively boat and cooking-centered plan, honest booking status, and fallback.",
+      "destination": "Sep 16 page",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts Sep 16 plan and fallbacks", "tests/e2e/itinerary.spec.ts birthday-state test"]
+    },
+    {
+      "id": "BDAY-02",
+      "source": "Accepted budget preference",
+      "requirement": "Keep the birthday target near EUR 250 and below EUR 300 for two unless clearly marked otherwise.",
+      "destination": "Birthday and budget views",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts birthday total EUR 243-248 and EUR 250 budget category", "tests/unit/trip-data.test.ts budget reconciliation"]
+    },
+    {
+      "id": "BEACH-01",
+      "source": "User preference",
+      "requirement": "Preserve three relaxed beach or tanning opportunities.",
+      "destination": "Daily itinerary",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts Sep 16 boat/swim, Sep 17 Capitolo and Sep 20-21 Salento beach plans"]
+    },
+    {
+      "id": "SHOP-01",
+      "source": "User preference",
+      "requirement": "Provide a Naples shopping day focused on cosmetics and international brands on Sep 25.",
+      "destination": "Sep 25 page",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts Sep 25 Sephora, Via Toledo, Galleria Umberto I and Via Chiaia timeline"]
+    },
+    {
+      "id": "LODGE-01",
+      "source": "User budget and lodging preference",
+      "requirement": "Recommend mid-range or apartment-style lodging below EUR 200 per night for the room and label every option unbooked unless confirmed.",
+      "destination": "Bookings and daily lodging cards",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts lodging candidates", "tests/unit/trip-data.test.ts lodging-status assertions", "src/pages/BookingsPage.tsx"]
+    },
+    {
+      "id": "CAR-01",
+      "source": "User transport requirements",
+      "requirement": "Recommend an automatic rental that fits one large suitcase and one trolley.",
+      "destination": "Bookings and transport views",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts automatic compact selection criteria and luggage note"]
+    },
+    {
+      "id": "CAR-02",
+      "source": "Accepted transport outline",
+      "requirement": "Show Naples Airport pickup Sep 15 and return Sep 24 with supplier, protection allowance, deposit, excess, fuel, mileage, traffic and parking caveats.",
+      "destination": "Bookings and driving-day views",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts car plan and driving days", "src/pages/BookingsPage.tsx rental checklist"]
+    },
+    {
+      "id": "BUD-01",
+      "source": "User budget target",
+      "requirement": "Keep the planned total at or below EUR 3000 for two, excluding booked flights and shopping merchandise, with a visible buffer.",
+      "destination": "Budget view",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts EUR 2,887 operating plan plus EUR 113 reserve", "tests/unit/trip-data.test.ts budget assertions", "src/pages/BudgetPage.tsx"]
+    },
+    {
+      "id": "BUD-02",
+      "source": "User detail requirement",
+      "requirement": "Label every amount as for two or per person, distinguish estimates from confirmed prices, and keep refundable deposits outside spend.",
+      "destination": "All price presentations",
+      "status": "implemented",
+      "evidence": ["src/data/types.ts MoneyAmount model", "src/data/trip.ts amount bases and deposit liquidity", "src/pages/BudgetPage.tsx"]
+    },
+    {
+      "id": "CASH-01",
+      "source": "User detail requirement",
+      "requirement": "Give a combined daily cash-envelope recommendation without double-counting it in the trip budget.",
+      "destination": "Every daily page",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts every DayPlan.cash", "tests/unit/trip-data.test.ts cash-not-category assertion"]
+    },
+    {
+      "id": "DETAIL-01",
+      "source": "User request for vivid detail",
+      "requirement": "Every day includes dated local-time schedule, locations, prices, weather expectation, sunrise, sunset, cash, transport and fallback.",
+      "destination": "Every daily page",
+      "status": "implemented",
+      "evidence": ["src/data/types.ts DayPlan invariant", "src/data/trip.ts 13 complete DayPlan records", "tests/unit/trip-data.test.ts completeness assertion"]
+    },
+    {
+      "id": "DRIVE-01",
+      "source": "User traffic requirement",
+      "requirement": "Every driving day includes departure time, baseline and planned duration, expected traffic/delay, parking and a live-check warning.",
+      "destination": "Driving-day pages",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts driving-day mobility objects", "tests/unit/trip-data.test.ts driving completeness assertion"]
+    },
+    {
+      "id": "WEATHER-01",
+      "source": "User weather requirement",
+      "requirement": "Distinguish climate expectation from live forecast and expose source freshness and forecast fallback.",
+      "destination": "Weather panels",
+      "status": "implemented",
+      "evidence": ["src/lib/weather.ts live/cached/seasonal state machine", "src/components/WeatherPanel.tsx", "src/data/validation.ts seasonal-data guard"]
+    },
+    {
+      "id": "MAP-01",
+      "source": "User Google Maps threshold and explicit approval of visibly labeled exceptions",
+      "requirement": "Every recommended restaurant and attraction has Google Maps rating at least 4.7 and at least 150 reviews with checked date and link; approved cultural exceptions remain visibly distinct.",
+      "destination": "Venue cards and map",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts venue evidence and checked dates", "src/data/validation.ts threshold enforcement", "tests/unit/trip-data.test.ts strict venue-threshold assertions"]
+    },
+    {
+      "id": "LOCAL-01",
+      "source": "User local recommendation request",
+      "requirement": "Use sourced local guidance and avoid calling an unsourced venue a local recommendation.",
+      "destination": "Venue cards and source notes",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts Visit Puglia and LecceNews24 source records", "src/pages/AboutPage.tsx source register"]
+    },
+    {
+      "id": "SITE-01",
+      "source": "User website request",
+      "requirement": "Deliver a complete interactive mobile-first itinerary with direct routes for day, map, budget, bookings and source/about views.",
+      "destination": "Deployed application",
+      "status": "implemented",
+      "evidence": ["src/App.tsx HashRouter route table", "tests/e2e/itinerary.spec.ts direct-route tests", "dist production artifact audit"]
+    },
+    {
+      "id": "SITE-02",
+      "source": "User hosting request",
+      "requirement": "Deploy from a new public GitHub repository through GitHub Pages with repository-base-safe hash routes.",
+      "destination": "GitHub repository and Pages URL",
+      "status": "implemented",
+      "evidence": ["vite.config.ts repository base and PWA scope", ".github/workflows/deploy.yml verified Pages pipeline", "tests/e2e/itinerary.spec.ts direct hash routes"]
+    },
+    {
+      "id": "DES-01",
+      "source": "User named design-with-refero skill",
+      "requirement": "Use a documented Refero-derived visual system and pass its design scorecard at 80 or higher.",
+      "destination": "DESIGN.md and rendered site",
+      "status": "implemented",
+      "evidence": ["DESIGN.md Refero rationale and rendered score 94/100", "src/styles.css implementation"]
+    },
+    {
+      "id": "QA-01",
+      "source": "User named Verification and Quality Assurance skill",
+      "requirement": "Pass the 0.95 truth threshold, automated content tests, accessibility, responsive, cross-browser, privacy and deployed-site verification.",
+      "destination": "CI and QA report",
+      "status": "implemented",
+      "evidence": ["qa/verification-report.json", "44/44 Playwright checks across four projects", ".github/workflows/deploy.yml post-deploy smoke test"]
+    },
+    {
+      "id": "PRIV-01",
+      "source": "Public-repository safety requirement",
+      "requirement": "Exclude personal email, booking references, credentials, tokens, passport, payment and private confirmation data from files, history and build.",
+      "destination": "Repository and deployed artifact",
+      "status": "implemented",
+      "evidence": ["src/data/validation.ts email guard", "scripts/site-audit.mjs artifact privacy patterns", "pre-commit repository secret scan"]
+    },
+    {
+      "id": "PRIV-02",
+      "source": "User explicitly approved public first names and exact itinerary",
+      "requirement": "The public site may show Niv and Rinat's first names and exact trip dates, but not surnames, email, flight PNR or other private identifiers.",
+      "destination": "Repository and deployed artifact",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts public-data boundary", "README.md privacy statement", "scripts/site-audit.mjs"]
+    },
+    {
+      "id": "STATUS-01",
+      "source": "Conversation state",
+      "requirement": "Describe only flights as booked; clearly label lodging, car and activities as candidates, estimates or needing confirmation.",
+      "destination": "Bookings and all related cards",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts booking states", "src/data/validation.ts false-booked guard", "tests/unit/trip-data.test.ts booking uncertainty assertion"]
+    }
+  ],
+  "final_verification": [
+    "npm run verify",
+    "44/44 Playwright tests across Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet",
+    "zero serious or critical axe findings on overview, birthday, map, budget and bookings",
+    "built-artifact privacy and base-path audit",
+    "unauthenticated production smoke test is enforced after deployment"
+  ]
+}

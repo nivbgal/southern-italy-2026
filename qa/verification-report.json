@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "threshold": 0.95,
+  "generatedAt": "2026-08-29T00:00:00+03:00",
+  "exactArtifact": {
+    "sourceCommit": "Resolved from github.sha by the release workflow and embedded in the site footer",
+    "deployedUrl": "https://nivbgal.github.io/southern-italy-2026/"
+  },
+  "categories": [
+    {
+      "id": "commitment-coverage",
+      "weight": 0.2,
+      "score": 1,
+      "status": "passed",
+      "evidence": [
+        "qa/commitment-ledger.json has 27 final-state requirements with implementation evidence",
+        "scripts/ledger-audit.mjs rejects pending or evidence-free implemented entries"
+      ]
+    },
+    {
+      "id": "factual-source-accuracy",
+      "weight": 0.3,
+      "score": 0.96,
+      "status": "passed-with-timestamped-estimates",
+      "evidence": [
+        "src/data/validation.ts enforces 13 dates, 12 nights, exact flights, route, price state, source resolution and recommendation thresholds",
+        "tests/unit/trip-data.test.ts passes nine canonical data-invariant checks",
+        "Prices, ratings, weather and traffic remain visibly timestamped or labeled seasonal/typical rather than guaranteed"
+      ]
+    },
+    {
+      "id": "functional-behavior",
+      "weight": 0.15,
+      "score": 1,
+      "status": "passed",
+      "evidence": [
+        "44/44 Playwright checks pass across four browser/device projects",
+        "Hash routes, birthday state, budget exclusions, booking uncertainty and protected links are exercised",
+        "Device-local state supports persistence, export, import and reset without a backend"
+      ]
+    },
+    {
+      "id": "accessibility",
+      "weight": 0.1,
+      "score": 1,
+      "status": "passed",
+      "evidence": [
+        "Zero serious or critical axe findings on overview, birthday, map, budget and bookings routes",
+        "44px targets, visible focus, semantic labels and prefers-reduced-motion styling are implemented"
+      ]
+    },
+    {
+      "id": "responsive-cross-browser",
+      "weight": 0.1,
+      "score": 1,
+      "status": "passed",
+      "evidence": [
+        "Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet projects pass",
+        "The 320px overflow assertion passes and desktop/mobile screenshots were visually reviewed"
+      ]
+    },
+    {
+      "id": "security-privacy",
+      "weight": 0.1,
+      "score": 1,
+      "status": "passed",
+      "evidence": [
+        "src/data/validation.ts rejects public email content",
+        "scripts/site-audit.mjs scans built output for emails, tokens, private keys, secret assignments and booking references",
+        "No backend, accounts, analytics, cookies, ad technology or location tracking are present"
+      ]
+    },
+    {
+      "id": "deployment-performance",
+      "weight": 0.05,
+      "score": 0.99,
+      "status": "passed-at-release-gate",
+      "evidence": [
+        "The production build succeeds with a repository-safe base and lazy-loaded map bundle",
+        "The PWA precaches only the app shell and itinerary assets, not map tiles or booking/navigation pages",
+        "Local production Lighthouse: performance 99, accessibility 100, best practices 100, SEO 100; LCP 2.0s, TBT 30ms, CLS 0",
+        "The Pages workflow deploys only after all checks and performs an unauthenticated production smoke test"
+      ]
+    }
+  ],
+  "hardBlockers": [],
+  "notes": [
+    "Weighted truth score is computed by scripts/verification-gate.mjs; every category must independently meet 0.95.",
+    "Commercial prices and availability are not represented as confirmed reservations and require checkout verification before purchase.",
+    "The deployed footer and GitHub Pages environment provide the non-recursive exact release SHA."
+  ]
+}
