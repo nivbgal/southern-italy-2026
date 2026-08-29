@@ -28,7 +28,7 @@ export function AboutPage() {
           ))}
         </div>
       </section>
-      <section className="editorial-note"><h2>About the recommendations</h2><p>A Google Maps rating is evidence of broad approval, not proof that locals recommend a place. “Recommended by locals” appears only when a separate local editorial, tourism or municipal source supports it. Casa Grotta is the one permitted cultural exception to the 4.7/150 rule and is visibly labeled wherever it appears.</p></section>
+      <section className="editorial-note"><h2>About the place labels</h2><p>A Google Maps rating shows broad public approval. A local recommendation needs a separate local editorial, tourism or municipal source. The “Rinat’s pick” badge records one of her personal saves. Its rating stays visible, even when it is below 4.7. Casa Grotta remains the single cultural editor exception.</p></section>
     </>
   )
 }

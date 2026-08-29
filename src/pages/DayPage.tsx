@@ -5,6 +5,7 @@ import { WeatherPanel } from '../components/WeatherPanel'
 import { DestinationPhoto } from '../components/DestinationPhoto'
 import { photoForDay } from '../data/images'
 import { days, lodging, venues } from '../data/trip'
+import { venueBadge } from '../lib/venue'
 import { useTripState } from '../state/TripStateContext'
 
 const birthdayRequest = `Hello, I would like to book the evening cooking class on 16 September 2026 for two people. It is Rinat's 27th birthday. Can you offer a 19:30 start, a small cake presentation, lively music, local wine, and a safe, playful flour moment? Please confirm the total price for two, start time, duration, cancellation terms, and the birthday details that you can guarantee. We will book after your reply. Thank you, Niv.`
@@ -82,8 +83,9 @@ export function DayPage() {
           <div className="venue-grid">
             {featured.map((venue) => venue && (
               <article className="venue-card" key={venue.id}>
-                <div><span className="badge">{venue.qualification === 'editor-exception' ? 'Editor exception' : '4.7+ verified'}</span><span className="rating">Rating {venue.rating ?? 'not listed'} / 5 · {venue.reviewCount?.toLocaleString() ?? 'not rated'} reviews</span></div>
+                <div><span className={`badge ${venue.personalPickReason ? 'personal-pick-badge' : ''}`}>{venueBadge(venue)}</span><span className="rating">Rating {venue.rating ?? 'not listed'} / 5 · {venue.reviewCount?.toLocaleString() ?? 'not rated'} reviews</span></div>
                 <h3>{venue.name}</h3><p>{venue.localAngle}</p>
+                {venue.personalPickReason && <p className="personal-pick-note"><strong>{venue.visitWindow}</strong>{venue.personalPickReason}</p>}
                 <div className="venue-tags">{venue.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
                 <a className="button secondary" href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
               </article>

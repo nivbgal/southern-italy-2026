@@ -36,7 +36,7 @@
     { "id": "VIBE-30", "source": "Screenshot item 30", "requirement": "Use a specific earth-and-sea palette instead of generic pastel cards.", "destination": "Color tokens and surface rules", "status": "implemented", "evidence": ["Paper, deep ink, clay, ochre, and wine system in DESIGN.md", "Desktop and mobile screenshot review"] }
   ],
   "final_verification": [
-    "scripts/vibe-audit.mjs passes 27 automated anti-pattern and image checks",
+    "scripts/vibe-audit.mjs passes 28 automated anti-pattern and image checks",
     "Overview and birthday pages reviewed at 1440px and iPhone 13 size",
     "Playwright covers desktop, tablet, and mobile routes, accessibility, and narrow overflow",
     "DESIGN.md rendered score is 97/100"

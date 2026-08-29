@@ -79,7 +79,7 @@ describe('trip content integrity', () => {
 
   it('keeps strict Maps thresholds for recommended restaurants and attractions', () => {
     const governedVenues = venues.filter((venue) =>
-      ['restaurant', 'attraction'].includes(venue.kind),
+      ['restaurant', 'attraction'].includes(venue.kind) && venue.qualification === 'threshold-qualified',
     )
     expect(governedVenues.length).toBeGreaterThan(0)
 
@@ -96,6 +96,16 @@ describe('trip content integrity', () => {
     for (const venue of venues.filter((item) => item.qualification === 'editor-exception')) {
       expect(['restaurant', 'attraction'], venue.name).not.toContain(venue.kind)
       expect(venue.editorExceptionReason, venue.name).toBeTruthy()
+    }
+
+    const personalPicks = venues.filter((venue) => venue.personalPickReason)
+    expect(personalPicks).toHaveLength(5)
+    expect(personalPicks.filter((venue) => (venue.rating ?? 0) < 4.7)).toHaveLength(4)
+    for (const venue of personalPicks) {
+      expect(venue.tags, venue.name).toContain('personal-pick')
+      expect(venue.visitWindow, venue.name).toBeTruthy()
+      expect(venue.ratingVerifiedOn, venue.name).toBe('2026-08-29')
+      expect(venue.mapsUrl, venue.name).toMatch(/^https:\/\/maps\.app\.goo\.gl\//)
     }
   })
 

@@ -181,13 +181,26 @@ export const validateTripData = (): ValidationResult => {
       if (venue.rating === null || venue.rating < 4.7 || venue.reviewCount === null || venue.reviewCount < 150) {
         addIssue(issues, 'error', 'venue-threshold', `${venue.name} does not meet the 4.7 rating / 150 review threshold.`, `venues[${index}]`)
       }
-    } else {
+    } else if (venue.qualification === 'editor-exception') {
       if ((venue.kind === 'restaurant' || venue.kind === 'attraction') || !venue.editorExceptionReason?.trim()) {
         addIssue(issues, 'error', 'invalid-editor-exception', `${venue.name} cannot bypass the strict restaurant/attraction rule or lacks a reason.`, `venues[${index}]`)
       }
       if (!venue.tags.includes('editor-exception')) {
         addIssue(issues, 'error', 'unlabeled-editor-exception', `${venue.name} must carry an editor-exception tag.`, `venues[${index}].tags`)
       }
+    } else {
+      if (!venue.personalPickReason?.trim() || !venue.visitWindow?.trim()) {
+        addIssue(issues, 'error', 'invalid-personal-pick', `${venue.name} needs a personal-pick reason and visit window.`, `venues[${index}]`)
+      }
+      if (!venue.tags.includes('personal-pick')) {
+        addIssue(issues, 'error', 'unlabeled-personal-pick', `${venue.name} must carry a personal-pick tag.`, `venues[${index}].tags`)
+      }
+      if (venue.rating === null || venue.reviewCount === null) {
+        addIssue(issues, 'error', 'unverified-personal-pick', `${venue.name} needs a checked rating and review count.`, `venues[${index}]`)
+      }
+    }
+    if (venue.personalPickReason && (!venue.visitWindow?.trim() || !venue.tags.includes('personal-pick'))) {
+      addIssue(issues, 'error', 'incomplete-personal-pick', `${venue.name} needs a visit window and personal-pick tag.`, `venues[${index}]`)
     }
     if (!venue.mapsUrl.startsWith('https://') || !venue.evidenceUrl.startsWith('https://')) {
       addIssue(issues, 'error', 'unsafe-venue-url', `${venue.name} must have HTTPS Maps and evidence URLs.`, `venues[${index}]`)

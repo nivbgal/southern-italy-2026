@@ -40,6 +40,11 @@ for (const creator of ['ParisTaras', 'acediscovery', 'Sailko', 'Camelia.boban', 
   requireContent('photo attribution', creator)
 }
 
+for (const place of ['Spiaggia e Piscina Naturale di Marina Serra', 'Lido Bambù', 'Cooking Class Pugliamare', 'Il Quadrifoglio', 'Clarks Shop Bari']) {
+  requireContent('Rinat personal pick', place)
+}
+requireContent('personal-pick disclosure', 'Rinat’s pick')
+
 for (const id of ['polignano', 'lecce', 'salento', 'matera', 'naples']) {
   for (const suffix of ['960.avif', '1600.avif', '960.webp', '1600.webp']) {
     const expected = join(root, 'images', `${id}-${suffix}`)

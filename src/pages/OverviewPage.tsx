@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { budgetCategories, days, trip } from '../data/trip'
+import { budgetCategories, days, trip, venues } from '../data/trip'
 import { tripPhotos } from '../data/images'
 import { DestinationPhoto } from '../components/DestinationPhoto'
 import { StatusBadge } from '../components/StatusBadge'
@@ -7,6 +7,9 @@ import { StatusBadge } from '../components/StatusBadge'
 export function OverviewPage() {
   const birthday = days.find((day) => day.date === '2026-09-16')!
   const spent = budgetCategories.filter((item) => item.status !== 'excluded' && item.status !== 'reserve').reduce((sum, item) => sum + item.amountEur, 0)
+  const personalPicks = ['clarks-shop-bari', 'pugliamare-cooking-class', 'lido-bambu', 'il-quadrifoglio-monopoli', 'marina-serra-natural-pool']
+    .map((id) => venues.find((venue) => venue.id === id))
+    .filter((venue): venue is NonNullable<typeof venue> => Boolean(venue?.personalPickReason))
 
   return (
     <>
@@ -55,6 +58,20 @@ export function OverviewPage() {
           </Link>
         ))}
       </div>
+
+      <section className="personal-picks">
+        <div className="section-heading"><div><p className="eyebrow">Saved by Rinat</p><h2>Five places fitted into the route</h2></div><p>Maps ratings were checked 29 August 2026. A low rating stays visible.</p></div>
+        <div className="personal-pick-list">
+          {personalPicks.map((venue, index) => (
+            <article key={venue.id}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div><small>{venue.visitWindow}</small><h3>{venue.name}</h3><p>{venue.localAngle}</p></div>
+              <div><strong>{venue.rating?.toFixed(1)}</strong><small>{venue.reviewCount?.toLocaleString()} reviews</small></div>
+              <a href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open map</a>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="birthday-card">
         <div className="birthday-confetti" aria-hidden="true"><i /><i /><i /><i /><i /></div>

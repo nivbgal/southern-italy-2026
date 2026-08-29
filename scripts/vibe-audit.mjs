@@ -18,6 +18,7 @@ const publicSource = [
   'src/components/WeatherPanel.tsx',
   'src/data/trip.ts',
   'src/data/images.ts',
+  'src/lib/venue.ts',
   'src/pages/AboutPage.tsx',
   'src/pages/BookingsPage.tsx',
   'src/pages/BudgetPage.tsx',
@@ -63,6 +64,7 @@ requirePattern('earth accent token is missing', styles, /--clay:\s*#9d402e/i)
 requirePattern('AVIF responsive source is missing', read('src/components/DestinationPhoto.tsx'), /type="image\/avif"/)
 requirePattern('WebP responsive source is missing', read('src/components/DestinationPhoto.tsx'), /type="image\/webp"/)
 requirePattern('visible photo credit is missing', read('src/components/DestinationPhoto.tsx'), /Photo: \{photo\.author\}/)
+requirePattern('personal-pick label is missing', read('src/lib/venue.ts'), /Rinat’s pick/)
 
 for (const id of ['polignano', 'lecce', 'salento', 'matera', 'naples']) {
   for (const suffix of ['960.avif', '1600.avif', '960.webp', '1600.webp']) {
@@ -70,6 +72,6 @@ for (const id of ['polignano', 'lecce', 'salento', 'matera', 'naples']) {
   }
 }
 
-const result = { passed: failures.length === 0, checks: 27, failures }
+const result = { passed: failures.length === 0, checks: 28, failures }
 process.stdout.write(`${JSON.stringify(result, null, 2)}\n`)
 if (failures.length > 0) process.exitCode = 1

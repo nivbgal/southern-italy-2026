@@ -103,4 +103,19 @@ test.describe('public itinerary', () => {
     await expect(page.locator('main')).toContainText('ParisTaras')
     await expect(page.locator('main')).toContainText('CC BY-SA 4.0')
   })
+
+  test('shows all five of Rinat’s saved places with honest rating labels', async ({ page }) => {
+    await openRoute(page)
+    await expect(page.locator('.personal-pick-list article')).toHaveCount(5)
+    await expect(page.locator('.personal-pick-list')).toContainText('Clarks Shop Bari')
+    await expect(page.locator('.personal-pick-list')).toContainText('Cooking Class Pugliamare')
+    await expect(page.locator('.personal-pick-list')).toContainText('Lido Bambù')
+    await expect(page.locator('.personal-pick-list')).toContainText('Il Quadrifoglio')
+    await expect(page.locator('.personal-pick-list')).toContainText('Marina Serra')
+
+    await openRoute(page, '/map')
+    await page.getByRole('button', { name: 'Show Rinat’s picks' }).click()
+    await expect(page.locator('.venue-grid .venue-card')).toHaveCount(5)
+    await expect(page.locator('.venue-grid')).toContainText('Rating 4 / 5')
+  })
 })

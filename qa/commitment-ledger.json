@@ -151,10 +151,10 @@
     {
       "id": "MAP-01",
       "source": "User Google Maps threshold and explicit approval of visibly labeled exceptions",
-      "requirement": "Every recommended restaurant and attraction has Google Maps rating at least 4.7 and at least 150 reviews with checked date and link; approved cultural exceptions remain visibly distinct.",
+      "requirement": "Every guide recommendation has a Google Maps rating of at least 4.7 and at least 150 reviews with a checked date and link. Personal saves and approved cultural exceptions remain visibly distinct.",
       "destination": "Venue cards and map",
       "status": "implemented",
-      "evidence": ["src/data/trip.ts venue evidence and checked dates", "src/data/validation.ts threshold enforcement", "tests/unit/trip-data.test.ts strict venue-threshold assertions"]
+      "evidence": ["src/data/trip.ts venue evidence and checked dates", "src/data/validation.ts separate threshold, personal-pick and editor-exception validation", "tests/unit/trip-data.test.ts strict recommendation and personal-pick assertions"]
     },
     {
       "id": "LOCAL-01",
@@ -194,7 +194,7 @@
       "requirement": "Apply the full 30-item anti-vibe-code checklist without removing trip facts or functions.",
       "destination": "Public app, active stylesheet, policies, loading states, and QA",
       "status": "implemented",
-      "evidence": ["qa/vibe-checklist.json has 30 itemized final dispositions", "scripts/vibe-audit.mjs passes 27 static checks", "DESIGN.md rendered review score 97/100", "Playwright cross-browser and accessibility checks"]
+      "evidence": ["qa/vibe-checklist.json has 30 itemized final dispositions", "scripts/vibe-audit.mjs passes 28 static checks", "DESIGN.md rendered review score 97/100", "Playwright cross-browser and accessibility checks"]
     },
     {
       "id": "IMG-01",
@@ -205,12 +205,20 @@
       "evidence": ["src/components/DestinationPhoto.tsx responsive AVIF and WebP component", "src/data/images.ts creator, licence, source and alt records", "public/images optimized local assets", "tests/e2e/itinerary.spec.ts photography and credit test"]
     },
     {
+      "id": "PICK-01",
+      "source": "User supplied five Google Maps links that Rinat wants to see or visit",
+      "requirement": "Keep all five personal saves visible, show their checked ratings without calling low-rated places recommendations, and fit each place into a realistic day or optional route branch.",
+      "destination": "Overview personal-pick list, daily venue cards, map filter, and About label guide",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts five timestamped personal-pick venue records and day placement", "src/pages/OverviewPage.tsx five-place route list", "src/pages/MapPage.tsx Rinat’s picks filter", "tests/e2e/itinerary.spec.ts five-place visibility and rating-label test"]
+    },
+    {
       "id": "QA-01",
       "source": "User named Verification and Quality Assurance skill",
       "requirement": "Pass the 0.95 truth threshold, automated content tests, accessibility, responsive, cross-browser, privacy and deployed-site verification.",
       "destination": "CI and QA report",
       "status": "implemented",
-      "evidence": ["qa/verification-report.json", "60/60 Playwright checks across four projects", ".github/workflows/deploy.yml post-deploy smoke test"]
+      "evidence": ["qa/verification-report.json", "64/64 Playwright checks across four projects", ".github/workflows/deploy.yml post-deploy smoke test"]
     },
     {
       "id": "PRIV-01",
@@ -239,7 +247,7 @@
   ],
   "final_verification": [
     "npm run verify",
-    "60/60 Playwright tests across Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet",
+    "64/64 Playwright tests across Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet",
     "zero serious or critical axe findings on overview, birthday, map, budget and bookings",
     "built-artifact privacy and base-path audit",
     "unauthenticated production smoke test is enforced after deployment"

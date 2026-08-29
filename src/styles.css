@@ -424,6 +424,20 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
 .rating { color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; }
 .venue-tags { display: flex; flex-wrap: wrap; gap: 0.35rem 0.7rem; }
 .venue-tags span { color: var(--ink-muted); font-size: 0.68rem; font-weight: 700; text-decoration: underline; text-underline-offset: 0.2em; }
+.badge.personal-pick-badge { border-color: var(--clay); background: var(--ochre); color: var(--ink); }
+.venue-card > .personal-pick-note { display: grid; gap: 0.2rem; margin: 0; padding-top: 0.65rem; border-top: 1px solid var(--rule); color: var(--ink-muted); }
+.personal-pick-note strong { color: var(--clay-deep); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.personal-picks { margin-top: clamp(4rem, 9vw, 7rem); }
+.personal-picks .section-heading { margin-top: 0; }
+.personal-pick-list { display: grid; border-top: 1px solid var(--ink); }
+.personal-pick-list article { display: grid; grid-template-columns: 3rem minmax(0, 1fr) 6rem auto; gap: 1.25rem; align-items: center; padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
+.personal-pick-list article > span { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border: 1px solid var(--ink); background: var(--ochre); font-family: var(--font-mono); font-size: 0.62rem; font-weight: 750; }
+.personal-pick-list h3 { margin: 0.18rem 0 0.25rem; font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; line-height: 1.1; }
+.personal-pick-list p, .personal-pick-list small { margin: 0; color: var(--ink-muted); font-size: 0.75rem; }
+.personal-pick-list article > div:nth-child(3) { display: grid; justify-items: end; }
+.personal-pick-list article > div:nth-child(3) strong { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; line-height: 1; }
+.personal-pick-list article > a { min-height: 2.75rem; align-content: center; font-size: 0.72rem; font-weight: 750; }
 
 .fallback-panel, .cash-plan, .car-rental-card, .editorial-note, .state-panel { margin-top: clamp(3.5rem, 8vw, 6rem); padding: clamp(1.25rem, 4vw, 2rem); border-block: 1px solid var(--ink); background: rgba(200, 176, 109, 0.16); }
 .fallback-grid { display: grid; margin-top: 1.5rem; border-top: 1px solid var(--rule); }
@@ -598,6 +612,9 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.52; }
   .venue-card h3, .venue-card > p, .venue-card > .venue-tags, .venue-card > .button,
   .fallback-grid h3, .fallback-grid p, .fallback-grid small { grid-column: 1; grid-row: auto; }
   .venue-card > p { margin: 0; }
+  .personal-pick-list article { grid-template-columns: 2.5rem minmax(0, 1fr) auto; gap: 0.75rem; align-items: start; }
+  .personal-pick-list article > div:nth-child(3) { justify-items: start; }
+  .personal-pick-list article > a { grid-column: 2 / -1; width: max-content; }
 
   .day-practical, .lodging-facts, .car-rental-card dl { grid-template-columns: minmax(0, 1fr); }
   .day-practical > div { border-inline-end: 0; border-bottom: 1px solid var(--rule); }

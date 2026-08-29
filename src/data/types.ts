@@ -150,6 +150,7 @@ export type VenueKind =
   | 'beach'
   | 'viewpoint'
   | 'museum'
+  | 'experience'
   | 'shopping'
 
 export interface Venue {
@@ -161,8 +162,10 @@ export interface Venue {
   reviewCount: number | null
   reviewCountApproximate?: boolean
   ratingVerifiedOn: ISODate
-  qualification: 'threshold-qualified' | 'editor-exception'
+  qualification: 'threshold-qualified' | 'editor-exception' | 'personal-pick'
   editorExceptionReason?: string
+  personalPickReason?: string
+  visitWindow?: string
   mapsUrl: string
   evidenceUrl: string
   sourceIds: string[]
