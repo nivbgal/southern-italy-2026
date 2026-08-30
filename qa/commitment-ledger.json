@@ -210,7 +210,15 @@
       "requirement": "Keep all five personal saves visible, show their checked ratings without calling low-rated places recommendations, and fit each place into a realistic day or optional route branch.",
       "destination": "Overview personal-pick list, daily venue cards, map filter, and About label guide",
       "status": "implemented",
-      "evidence": ["src/data/trip.ts five timestamped personal-pick venue records and day placement", "src/pages/OverviewPage.tsx five-place route list", "src/pages/MapPage.tsx Rinat’s picks filter", "tests/e2e/itinerary.spec.ts five-place visibility and rating-label test"]
+      "evidence": ["src/data/trip.ts retains the five original timestamped personal-pick venue records and day placement", "src/pages/OverviewPage.tsx seven-place list includes the original five", "src/pages/MapPage.tsx Rinat’s picks filter", "tests/e2e/itinerary.spec.ts seven-place visibility and rating-label test"]
+    },
+    {
+      "id": "PICK-02",
+      "source": "User supplied two more Google Maps links on 30 August 2026",
+      "requirement": "Add Santa Maria al Bagno and ACQUASANTA dispensa e vino as Rinat picks, keep their live rating state honest, and fit both into the route.",
+      "destination": "Overview personal-pick list, 19 and 20 September plans, daily venue cards, and map filter",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts includes ACQUASANTA at the 19 September Ostuni lunch and Santa Maria al Bagno in the 20 September Ionian branch", "src/lib/venue.ts shows a dated 4.7/231 rating for ACQUASANTA and an unrated place label for Santa Maria al Bagno", "tests/e2e/itinerary.spec.ts checks all seven personal picks and both rating states"]
     },
     {
       "id": "QA-01",

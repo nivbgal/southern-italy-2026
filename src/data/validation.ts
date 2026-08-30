@@ -195,8 +195,10 @@ export const validateTripData = (): ValidationResult => {
       if (!venue.tags.includes('personal-pick')) {
         addIssue(issues, 'error', 'unlabeled-personal-pick', `${venue.name} must carry a personal-pick tag.`, `venues[${index}].tags`)
       }
-      if (venue.rating === null || venue.reviewCount === null) {
-        addIssue(issues, 'error', 'unverified-personal-pick', `${venue.name} needs a checked rating and review count.`, `venues[${index}]`)
+      const hasNoListedRating = venue.rating === null && venue.reviewCount === null
+      const hasPartialRating = (venue.rating === null) !== (venue.reviewCount === null)
+      if (hasPartialRating || (hasNoListedRating && !venue.tags.includes('unrated-location'))) {
+        addIssue(issues, 'error', 'unverified-personal-pick', `${venue.name} needs a complete checked rating or an unrated-location label.`, `venues[${index}]`)
       }
     }
     if (venue.personalPickReason && (!venue.visitWindow?.trim() || !venue.tags.includes('personal-pick'))) {

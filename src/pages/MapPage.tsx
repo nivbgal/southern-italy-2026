@@ -1,6 +1,6 @@
 import { Suspense, lazy, useMemo, useState } from 'react'
 import { venues } from '../data/trip'
-import { venueBadge } from '../lib/venue'
+import { venueBadge, venueRatingLabel } from '../lib/venue'
 
 const RouteMap = lazy(() => import('../components/RouteMap'))
 
@@ -24,8 +24,8 @@ export function MapPage() {
       </div>
       <section className="map-truth"><p><strong>Traffic data is typical.</strong> Each day shows its expected range. Check Google Maps on the travel morning before leaving.</p></section>
       <section>
-        <div className="section-heading"><div><p className="eyebrow">Saved pins · ratings checked 29 August 2026</p><h2>Places by category</h2></div><div className="filter-tabs" role="group" aria-label="Filter places">{(['all', 'personal', 'restaurant', 'attraction', 'beach', 'shopping'] as const).map((item) => <button className={filter === item ? 'active' : ''} aria-label={item === 'all' ? 'Show all places' : item === 'personal' ? 'Show Rinat’s picks' : `Show ${item}s`} aria-pressed={filter === item} key={item} onClick={() => setFilter(item)}>{item === 'all' ? 'All' : item === 'personal' ? 'Rinat’s picks' : item === 'restaurant' ? 'Eat' : item === 'attraction' ? 'See' : item === 'beach' ? 'Swim' : 'Shop'}</button>)}</div></div>
-        <div className="venue-grid">{filtered.map((venue) => <article className="venue-card" key={venue.id}><div><span className="badge">{venue.city}</span>{venue.personalPickReason && <span className="badge personal-pick-badge">{venueBadge(venue)}</span>}<span className="rating">Rating {venue.rating ?? 'not listed'} / 5 · {venue.reviewCount?.toLocaleString() ?? 'not rated'} reviews</span></div><h3>{venue.name}</h3><p>{venue.localAngle}</p>{venue.personalPickReason && <p className="personal-pick-note"><strong>{venue.visitWindow}</strong>{venue.personalPickReason}</p>}<a className="button secondary" href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></article>)}</div>
+        <div className="section-heading"><div><p className="eyebrow">Saved pins · dated rating checks</p><h2>Places by category</h2></div><div className="filter-tabs" role="group" aria-label="Filter places">{(['all', 'personal', 'restaurant', 'attraction', 'beach', 'shopping'] as const).map((item) => <button className={filter === item ? 'active' : ''} aria-label={item === 'all' ? 'Show all places' : item === 'personal' ? 'Show Rinat’s picks' : `Show ${item}s`} aria-pressed={filter === item} key={item} onClick={() => setFilter(item)}>{item === 'all' ? 'All' : item === 'personal' ? 'Rinat’s picks' : item === 'restaurant' ? 'Eat' : item === 'attraction' ? 'See' : item === 'beach' ? 'Swim' : 'Shop'}</button>)}</div></div>
+        <div className="venue-grid">{filtered.map((venue) => <article className="venue-card" key={venue.id}><div><span className="badge">{venue.city}</span>{venue.personalPickReason && <span className="badge personal-pick-badge">{venueBadge(venue)}</span>}<span className="rating">{venueRatingLabel(venue)}</span></div><h3>{venue.name}</h3><p>{venue.localAngle}</p>{venue.personalPickReason && <p className="personal-pick-note"><strong>{venue.visitWindow}</strong>{venue.personalPickReason}</p>}<a className="button secondary" href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></article>)}</div>
       </section>
     </>
   )

@@ -99,12 +99,13 @@ describe('trip content integrity', () => {
     }
 
     const personalPicks = venues.filter((venue) => venue.personalPickReason)
-    expect(personalPicks).toHaveLength(5)
-    expect(personalPicks.filter((venue) => (venue.rating ?? 0) < 4.7)).toHaveLength(4)
+    expect(personalPicks).toHaveLength(7)
+    expect(personalPicks.filter((venue) => venue.rating !== null && venue.rating < 4.7)).toHaveLength(4)
+    expect(personalPicks.filter((venue) => venue.rating === null)).toHaveLength(1)
     for (const venue of personalPicks) {
       expect(venue.tags, venue.name).toContain('personal-pick')
       expect(venue.visitWindow, venue.name).toBeTruthy()
-      expect(venue.ratingVerifiedOn, venue.name).toBe('2026-08-29')
+      expect(['2026-08-29', '2026-08-30'], venue.name).toContain(venue.ratingVerifiedOn)
       expect(venue.mapsUrl, venue.name).toMatch(/^https:\/\/maps\.app\.goo\.gl\//)
     }
   })

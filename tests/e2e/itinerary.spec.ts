@@ -104,18 +104,22 @@ test.describe('public itinerary', () => {
     await expect(page.locator('main')).toContainText('CC BY-SA 4.0')
   })
 
-  test('shows all five of Rinat’s saved places with honest rating labels', async ({ page }) => {
+  test('shows all seven of Rinat’s saved places with honest rating labels', async ({ page }) => {
     await openRoute(page)
-    await expect(page.locator('.personal-pick-list article')).toHaveCount(5)
+    await expect(page.locator('.personal-pick-list article')).toHaveCount(7)
     await expect(page.locator('.personal-pick-list')).toContainText('Clarks Shop Bari')
     await expect(page.locator('.personal-pick-list')).toContainText('Cooking Class Pugliamare')
     await expect(page.locator('.personal-pick-list')).toContainText('Lido Bambù')
     await expect(page.locator('.personal-pick-list')).toContainText('Il Quadrifoglio')
+    await expect(page.locator('.personal-pick-list')).toContainText('ACQUASANTA')
     await expect(page.locator('.personal-pick-list')).toContainText('Marina Serra')
+    await expect(page.locator('.personal-pick-list')).toContainText('Santa Maria al Bagno')
 
     await openRoute(page, '/map')
     await page.getByRole('button', { name: 'Show Rinat’s picks' }).click()
-    await expect(page.locator('.venue-grid .venue-card')).toHaveCount(5)
+    await expect(page.locator('.venue-grid .venue-card')).toHaveCount(7)
     await expect(page.locator('.venue-grid')).toContainText('Rating 4 / 5')
+    await expect(page.locator('.venue-grid')).toContainText('Rating 4.7 / 5 · 231 reviews · Checked 30 Aug 2026')
+    await expect(page.locator('.venue-grid')).toContainText('No place rating listed · Checked 30 Aug 2026')
   })
 })
