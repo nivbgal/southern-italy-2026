@@ -16,7 +16,7 @@ Production: <https://nivbgal.github.io/southern-italy-2026/>
 - Three-hour forecast cache using Open-Meteo when a date enters the reliable forecast window
 - Installable PWA shell and offline access to the itinerary and budget
 - Credited destination photography in responsive AVIF and WebP formats
-- A separate “Rinat’s pick” label for five personal saves, including places below the 4.7 recommendation threshold
+- A separate “Rinat’s pick” label for eight personal saves, including places below the 4.7 recommendation threshold
 
 Flights are the only confirmed reservations in the initial dataset. Lodging, car and activities remain candidates until the travelers update their status on their own device.
 

@@ -8,7 +8,7 @@ import { venueCheckDate } from '../lib/venue'
 export function OverviewPage() {
   const birthday = days.find((day) => day.date === '2026-09-16')!
   const spent = budgetCategories.filter((item) => item.status !== 'excluded' && item.status !== 'reserve').reduce((sum, item) => sum + item.amountEur, 0)
-  const personalPicks = ['clarks-shop-bari', 'pugliamare-cooking-class', 'lido-bambu', 'il-quadrifoglio-monopoli', 'acquasanta-ostuni', 'marina-serra-natural-pool', 'santa-maria-al-bagno']
+  const personalPicks = ['bari-vecchia-city-stop', 'clarks-shop-bari', 'pugliamare-cooking-class', 'lido-bambu', 'il-quadrifoglio-monopoli', 'acquasanta-ostuni', 'marina-serra-natural-pool', 'santa-maria-al-bagno']
     .map((id) => venues.find((venue) => venue.id === id))
     .filter((venue): venue is NonNullable<typeof venue> => Boolean(venue?.personalPickReason))
 
@@ -61,7 +61,7 @@ export function OverviewPage() {
       </div>
 
       <section className="personal-picks">
-        <div className="section-heading"><div><p className="eyebrow">Saved by Rinat</p><h2>Seven places fitted into the route</h2></div><p>Each rating shows its check date. Low ratings and unrated place pins stay visible.</p></div>
+        <div className="section-heading"><div><p className="eyebrow">Saved by Rinat</p><h2>Eight places fitted into the route</h2></div><p>Each rating shows its check date. Low ratings and unrated place pins stay visible.</p></div>
         <div className="personal-pick-list">
           {personalPicks.map((venue, index) => (
             <article key={venue.id}>

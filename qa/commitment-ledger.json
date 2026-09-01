@@ -210,7 +210,7 @@
       "requirement": "Keep all five personal saves visible, show their checked ratings without calling low-rated places recommendations, and fit each place into a realistic day or optional route branch.",
       "destination": "Overview personal-pick list, daily venue cards, map filter, and About label guide",
       "status": "implemented",
-      "evidence": ["src/data/trip.ts retains the five original timestamped personal-pick venue records and day placement", "src/pages/OverviewPage.tsx seven-place list includes the original five", "src/pages/MapPage.tsx Rinat’s picks filter", "tests/e2e/itinerary.spec.ts seven-place visibility and rating-label test"]
+      "evidence": ["src/data/trip.ts retains the five original timestamped personal-pick venue records and day placement", "src/pages/OverviewPage.tsx eight-place list includes the original five", "src/pages/MapPage.tsx Rinat’s picks filter", "tests/e2e/itinerary.spec.ts eight-place visibility and rating-label test"]
     },
     {
       "id": "PICK-02",
@@ -218,7 +218,15 @@
       "requirement": "Add Santa Maria al Bagno and ACQUASANTA dispensa e vino as Rinat picks, keep their live rating state honest, and fit both into the route.",
       "destination": "Overview personal-pick list, 19 and 20 September plans, daily venue cards, and map filter",
       "status": "implemented",
-      "evidence": ["src/data/trip.ts includes ACQUASANTA at the 19 September Ostuni lunch and Santa Maria al Bagno in the 20 September Ionian branch", "src/lib/venue.ts shows a dated 4.7/231 rating for ACQUASANTA and an unrated place label for Santa Maria al Bagno", "tests/e2e/itinerary.spec.ts checks all seven personal picks and both rating states"]
+      "evidence": ["src/data/trip.ts includes ACQUASANTA at the 19 September Ostuni lunch and Santa Maria al Bagno in the 20 September Ionian branch", "src/lib/venue.ts shows a dated 4.7/231 rating for ACQUASANTA and an unrated place label for Santa Maria al Bagno", "tests/e2e/itinerary.spec.ts checks the saved places and both rating states"]
+    },
+    {
+      "id": "BARI-01",
+      "source": "User chose to add Bari sightseeing on 15 September 2026",
+      "requirement": "Make Bari Vecchia a planned stop between Naples Airport and Polignano. Add safe parking and luggage rules, realistic drive times, a compact sightseeing route, and a delay fallback. Keep the Polignano sunset and the birthday plan.",
+      "destination": "15 September day page, overview personal-pick list, map, sources, and tests",
+      "status": "implemented",
+      "evidence": ["src/data/trip.ts Bari Vecchia venue and 15 September timeline", "Open Source Routing Machine baseline checked 1 September 2026", "Visit Puglia Bari sources", "tests/unit/trip-data.test.ts planned Bari invariant", "tests/e2e/itinerary.spec.ts Bari day check"]
     },
     {
       "id": "QA-01",
@@ -226,7 +234,7 @@
       "requirement": "Pass the 0.95 truth threshold, automated content tests, accessibility, responsive, cross-browser, privacy and deployed-site verification.",
       "destination": "CI and QA report",
       "status": "implemented",
-      "evidence": ["qa/verification-report.json", "64/64 Playwright checks across four projects", ".github/workflows/deploy.yml post-deploy smoke test"]
+      "evidence": ["qa/verification-report.json", "68/68 Playwright checks across four projects", ".github/workflows/deploy.yml post-deploy smoke test"]
     },
     {
       "id": "PRIV-01",
@@ -255,7 +263,7 @@
   ],
   "final_verification": [
     "npm run verify",
-    "64/64 Playwright tests across Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet",
+    "68/68 Playwright tests across Chromium desktop, Firefox desktop, WebKit mobile and Chromium tablet",
     "zero serious or critical axe findings on overview, birthday, map, budget and bookings",
     "built-artifact privacy and base-path audit",
     "unauthenticated production smoke test is enforced after deployment"

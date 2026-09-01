@@ -36,7 +36,7 @@
       "score": 1,
       "status": "passed",
       "evidence": [
-        "64/64 Playwright checks pass across four browser/device projects",
+        "68/68 Playwright checks pass across four browser/device projects",
         "Hash routes, policy pages, photography credits, personal-pick filtering, birthday state, budget exclusions, booking uncertainty and protected links are exercised",
         "Device-local state supports persistence, export, import and reset without a backend"
       ]

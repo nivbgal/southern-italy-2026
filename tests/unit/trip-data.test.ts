@@ -99,15 +99,32 @@ describe('trip content integrity', () => {
     }
 
     const personalPicks = venues.filter((venue) => venue.personalPickReason)
-    expect(personalPicks).toHaveLength(7)
+    expect(personalPicks).toHaveLength(8)
     expect(personalPicks.filter((venue) => venue.rating !== null && venue.rating < 4.7)).toHaveLength(4)
-    expect(personalPicks.filter((venue) => venue.rating === null)).toHaveLength(1)
+    expect(personalPicks.filter((venue) => venue.rating === null)).toHaveLength(2)
     for (const venue of personalPicks) {
       expect(venue.tags, venue.name).toContain('personal-pick')
       expect(venue.visitWindow, venue.name).toBeTruthy()
-      expect(['2026-08-29', '2026-08-30'], venue.name).toContain(venue.ratingVerifiedOn)
+      expect(['2026-08-29', '2026-08-30', '2026-09-01'], venue.name).toContain(venue.ratingVerifiedOn)
       expect(venue.mapsUrl, venue.name).toMatch(/^https:\/\/maps\.app\.goo\.gl\//)
     }
+  })
+
+  it('makes Bari a planned stop without losing the Polignano sunset', () => {
+    const day = days.find((item) => item.date === '2026-09-15')!
+    const bariItems = day.timeline.filter((item) => item.venueId === 'bari-vecchia-city-stop')
+
+    expect(day.title).toContain('Bari Vecchia')
+    expect(day.driving.route).toContain('Bari Vecchia')
+    expect(day.driving.arriveBy).toBe('17:15')
+    expect(bariItems.map((item) => item.title)).toEqual([
+      'Park outside Bari Vecchia',
+      'Castle exterior and pasta lanes',
+      'Basilica San Nicola',
+      'Old walls and a fast local bite',
+    ])
+    expect(day.timeline.find((item) => item.id === 'd02-sunset')?.time).toBe('19:02')
+    expect(day.fallbacks.some((fallback) => /skip Bari/i.test(fallback.plan))).toBe(true)
   })
 
   it('reconciles the two-person trip budget without counting exclusions', () => {

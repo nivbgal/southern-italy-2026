@@ -104,9 +104,10 @@ test.describe('public itinerary', () => {
     await expect(page.locator('main')).toContainText('CC BY-SA 4.0')
   })
 
-  test('shows all seven of Rinat’s saved places with honest rating labels', async ({ page }) => {
+  test('shows all eight of Rinat’s saved places with honest rating labels', async ({ page }) => {
     await openRoute(page)
-    await expect(page.locator('.personal-pick-list article')).toHaveCount(7)
+    await expect(page.locator('.personal-pick-list article')).toHaveCount(8)
+    await expect(page.locator('.personal-pick-list')).toContainText('Bari Vecchia')
     await expect(page.locator('.personal-pick-list')).toContainText('Clarks Shop Bari')
     await expect(page.locator('.personal-pick-list')).toContainText('Cooking Class Pugliamare')
     await expect(page.locator('.personal-pick-list')).toContainText('Lido Bambù')
@@ -117,9 +118,19 @@ test.describe('public itinerary', () => {
 
     await openRoute(page, '/map')
     await page.getByRole('button', { name: 'Show Rinat’s picks' }).click()
-    await expect(page.locator('.venue-grid .venue-card')).toHaveCount(7)
+    await expect(page.locator('.venue-grid .venue-card')).toHaveCount(8)
     await expect(page.locator('.venue-grid')).toContainText('Rating 4 / 5')
     await expect(page.locator('.venue-grid')).toContainText('Rating 4.7 / 5 · 231 reviews · Checked 30 Aug 2026')
     await expect(page.locator('.venue-grid')).toContainText('No place rating listed · Checked 30 Aug 2026')
+    await expect(page.locator('.venue-grid')).toContainText('No place rating listed · Checked 1 Sep 2026')
+  })
+
+  test('shows Bari as a planned stop before the Polignano sunset', async ({ page }) => {
+    await openRoute(page, '/day/2026-09-15')
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Bari Vecchia')
+    await expect(page.locator('main')).toContainText('Basilica San Nicola')
+    await expect(page.locator('main')).toContainText('Park outside Bari Vecchia')
+    await expect(page.locator('main')).toContainText('19:02')
+    await expect(page.locator('main')).toContainText('Skip Bari and drive to Polignano')
   })
 })
