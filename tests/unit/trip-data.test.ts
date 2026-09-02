@@ -8,6 +8,7 @@ import {
   venues,
 } from '../../src/data/trip'
 import { validateTripData } from '../../src/data/validation'
+import { placeForTimelineItem } from '../../src/lib/timeline-place'
 
 const expectedDates = Array.from(
   { length: 13 },
@@ -174,6 +175,19 @@ describe('trip content integrity', () => {
         expect(day.driving.plannedMinutes, day.date).toBeGreaterThan(0)
         expect(day.driving.traffic, day.date).toBeDefined()
         expect(day.driving.sourceIds?.length, day.date).toBeGreaterThan(0)
+      }
+    }
+  })
+
+  it('gives every timed item a usable place, address and map link', () => {
+    for (const day of days) {
+      for (const item of day.timeline) {
+        const place = placeForTimelineItem(item)
+        expect(place, `${day.date}: ${item.title}`).toBeDefined()
+        expect(place?.name, `${day.date}: ${item.title}`).not.toBe('')
+        expect(place?.address, `${day.date}: ${item.title}`).not.toBe('')
+        expect(place?.links.length, `${day.date}: ${item.title}`).toBeGreaterThan(0)
+        expect(place?.links[0]?.url, `${day.date}: ${item.title}`).toMatch(/^https:\/\//)
       }
     }
   })

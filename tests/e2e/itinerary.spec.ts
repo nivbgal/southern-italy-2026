@@ -133,4 +133,25 @@ test.describe('public itinerary', () => {
     await expect(page.locator('main')).toContainText('19:02')
     await expect(page.locator('main')).toContainText('Skip Bari and drive to Polignano')
   })
+
+  test('shows exact stay details and route links inside the daily timeline', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 720 })
+    await openRoute(page, '/day/2026-09-15')
+
+    const checkIn = page.locator('.timeline-item').filter({ hasText: 'Check in and reset' })
+    await expect(checkIn).toContainText('Don Nicola Tourist Location')
+    await expect(checkIn).toContainText('Via Dante Alighieri 1')
+    await expect(checkIn.getByRole('link', { name: 'Open in Google Maps' })).toBeVisible()
+    await expect(checkIn.getByRole('link', { name: 'Open Booking.com' })).toBeVisible()
+
+    const drive = page.locator('.timeline-item').filter({ hasText: 'Drive NAP' })
+    await expect(drive).toContainText('Naples Airport to Bari Vecchia')
+    await expect(drive.getByRole('link', { name: 'Open route' })).toBeVisible()
+
+    const dimensions = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }))
+    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1)
+  })
 })

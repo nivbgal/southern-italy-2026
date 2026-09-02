@@ -124,6 +124,27 @@ export interface TimelineItem {
   bookingId?: string
 }
 
+export type TimelinePlaceRef =
+  | `location:${string}`
+  | `lodging:${string}`
+  | `venue:${string}`
+
+export interface TripLocationLink {
+  label: string
+  url: string
+}
+
+export interface TripLocation {
+  id: string
+  name: string
+  address: string
+  label: 'Exact address' | 'Area' | 'Route' | 'Meet here' | 'Choose on the day'
+  mapsUrl: string
+  checkedOn: ISODate
+  note?: string
+  links?: TripLocationLink[]
+}
+
 export interface ItineraryDay {
   id: string
   dayNumber: number
@@ -157,6 +178,9 @@ export interface Venue {
   id: string
   name: string
   city: string
+  address?: string
+  addressLabel?: 'Exact address' | 'Area'
+  addressVerifiedOn?: ISODate
   kind: VenueKind
   rating: number | null
   reviewCount: number | null
@@ -179,6 +203,9 @@ export interface LodgingOption {
   id: string
   name: string
   city: string
+  address: string
+  mapsUrl: string
+  addressVerifiedOn: ISODate
   checkIn: ISODate
   checkOut: ISODate
   nights: number

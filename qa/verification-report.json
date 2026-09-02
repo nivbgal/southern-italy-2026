@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "threshold": 0.95,
-  "generatedAt": "2026-08-29T23:00:00+03:00",
+  "generatedAt": "2026-09-02T09:15:00+03:00",
   "exactArtifact": {
     "sourceCommit": "Resolved from github.sha by the release workflow and embedded in the site footer",
     "deployedUrl": "https://nivbgal.github.io/southern-italy-2026/"
@@ -13,7 +13,7 @@
       "score": 1,
       "status": "passed",
       "evidence": [
-        "qa/commitment-ledger.json has 30 final-state requirements with implementation evidence",
+        "qa/commitment-ledger.json has 32 final-state requirements with implementation evidence",
         "qa/vibe-checklist.json has 30 itemized design dispositions with implementation evidence",
         "scripts/ledger-audit.mjs rejects pending or evidence-free implemented entries"
       ]
@@ -25,7 +25,8 @@
       "status": "passed-with-timestamped-estimates",
       "evidence": [
         "src/data/validation.ts enforces 13 dates, 12 nights, exact flights, route, price state, source resolution and recommendation thresholds",
-        "tests/unit/trip-data.test.ts passes ten canonical data-invariant checks",
+        "tests/unit/trip-data.test.ts passes 12 canonical data-invariant checks, including complete timeline place data",
+        "Every timed item resolves to a checked stay, venue, meeting point, area or driving route with an HTTPS map link",
         "Five user-supplied Maps saves were checked on 29 August 2026 and remain separate from the 4.7 recommendation badge",
         "Prices, ratings, weather and traffic remain visibly timestamped or labeled seasonal/typical rather than guaranteed"
       ]
@@ -36,8 +37,8 @@
       "score": 1,
       "status": "passed",
       "evidence": [
-        "68/68 Playwright checks pass across four browser/device projects",
-        "Hash routes, policy pages, photography credits, personal-pick filtering, birthday state, budget exclusions, booking uncertainty and protected links are exercised",
+        "72/72 Playwright checks pass across four browser/device projects",
+        "Hash routes, timeline addresses, route links, policy pages, photography credits, personal-pick filtering, birthday state, budget exclusions, booking uncertainty and protected links are exercised",
         "Device-local state supports persistence, export, import and reset without a backend"
       ]
     },

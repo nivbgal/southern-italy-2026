@@ -85,6 +85,7 @@ export function DayPage() {
               <article className="venue-card" key={venue.id}>
                 <div><span className={`badge ${venue.personalPickReason ? 'personal-pick-badge' : ''}`}>{venueBadge(venue)}</span><span className="rating">{venueRatingLabel(venue)}</span></div>
                 <h3>{venue.name}</h3><p>{venue.localAngle}</p>
+                <address className="venue-address">{venue.address ?? `${venue.city}, Italy`}</address>
                 {venue.personalPickReason && <p className="personal-pick-note"><strong>{venue.visitWindow}</strong>{venue.personalPickReason}</p>}
                 <div className="venue-tags">{venue.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
                 <a className="button secondary" href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
@@ -105,7 +106,13 @@ export function DayPage() {
       </section>
 
       <section className="day-practical">
-        <div><p className="eyebrow">Sleep</p><h2>{hotel?.name ?? 'Departure day'}</h2><p>{hotel?.notes.join(' ')}</p></div>
+        <div>
+          <p className="eyebrow">Sleep</p>
+          <h2>{hotel?.name ?? 'Departure day'}</h2>
+          {hotel && <address>{hotel.address}</address>}
+          <p>{hotel?.notes.join(' ')}</p>
+          {hotel && <div className="day-practical-links"><a href={hotel.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a><a href={hotel.bookingUrl} target="_blank" rel="noopener noreferrer">Open Booking.com</a></div>}
+        </div>
         <div><p className="eyebrow">Carry forward</p><ul>{day.practicalNotes.map((note) => <li key={note}>{note}</li>)}</ul></div>
       </section>
 

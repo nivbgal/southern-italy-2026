@@ -126,11 +126,11 @@
     },
     {
       "id": "DETAIL-01",
-      "source": "User request for vivid detail",
-      "requirement": "Every day includes dated local-time schedule, locations, prices, weather expectation, sunrise, sunset, cash, transport and fallback.",
+      "source": "User requests for vivid detail and exact place data in each day",
+      "requirement": "Every timed item shows its named place, address or route, and a usable map link. Stay actions also link to the exact lodging listing.",
       "destination": "Every daily page",
       "status": "implemented",
-      "evidence": ["src/data/types.ts DayPlan invariant", "src/data/trip.ts 13 complete DayPlan records", "tests/unit/trip-data.test.ts completeness assertion"]
+      "evidence": ["src/data/trip.ts checked location registry and lodging addresses", "src/lib/timeline-place.ts typed place resolver", "src/components/Timeline.tsx visible place block", "tests/unit/trip-data.test.ts full timeline place assertion", "tests/e2e/itinerary.spec.ts exact stay and route-link check"]
     },
     {
       "id": "DRIVE-01",

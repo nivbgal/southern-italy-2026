@@ -1,4 +1,4 @@
-import { bookings, budgetCategories, days, lodging, trip, venues } from './trip'
+import { bookings, budgetCategories, days, locations, lodging, timelinePlaceRefs, trip, venues } from './trip'
 import type { TimelineItem, ValidationIssue, ValidationResult } from './types'
 
 const DAY_MS = 86_400_000
@@ -40,25 +40,35 @@ export const validateTripData = (): ValidationResult => {
   const sourceIds = new Set(trip.sources.map((source) => source.id))
   const venueIds = new Set(venues.map((venue) => venue.id))
   const lodgingIds = new Set(lodging.map((stay) => stay.id))
+  const locationIds = new Set(locations.map((location) => location.id))
   const bookingIds = new Set(bookings.map((booking) => booking.id))
 
   const duplicateSources = findDuplicates(trip.sources.map((source) => source.id))
   const duplicateVenues = findDuplicates(venues.map((venue) => venue.id))
   const duplicateLodging = findDuplicates(lodging.map((stay) => stay.id))
+  const duplicateLocations = findDuplicates(locations.map((location) => location.id))
   const duplicateBookings = findDuplicates(bookings.map((booking) => booking.id))
   const duplicateDays = findDuplicates(days.map((day) => day.id))
   const duplicateTimeline = findDuplicates(days.flatMap((day) => day.timeline.map((item) => item.id)))
+  const timelineIds = new Set(days.flatMap((day) => day.timeline.map((item) => item.id)))
 
   for (const [label, duplicates] of [
     ['source', duplicateSources],
     ['venue', duplicateVenues],
     ['lodging', duplicateLodging],
+    ['location', duplicateLocations],
     ['booking', duplicateBookings],
     ['day', duplicateDays],
     ['timeline', duplicateTimeline],
   ] as const) {
     if (duplicates.length > 0) {
       addIssue(issues, 'error', 'duplicate-id', `Duplicate ${label} IDs: ${[...new Set(duplicates)].join(', ')}`)
+    }
+  }
+
+  for (const itemId of Object.keys(timelinePlaceRefs)) {
+    if (!timelineIds.has(itemId)) {
+      addIssue(issues, 'error', 'orphan-timeline-place', `Place data points to unknown timeline item ${itemId}.`, `timelinePlaceRefs.${itemId}`)
     }
   }
 
@@ -121,6 +131,26 @@ export const validateTripData = (): ValidationResult => {
       if (item.bookingId && !bookingIds.has(item.bookingId)) {
         addIssue(issues, 'error', 'missing-booking-reference', `Unknown booking ${item.bookingId}.`, `days[${index}].timeline[${timelineIndex}].bookingId`)
       }
+
+      const bookingStay = lodging.find((stay) => item.bookingId === `booking-${stay.id}`)
+      const placeRef = timelinePlaceRefs[item.id]
+        ?? (item.venueId ? `venue:${item.venueId}` : undefined)
+        ?? (bookingStay ? `lodging:${bookingStay.id}` : undefined)
+      if (!placeRef) {
+        addIssue(issues, 'error', 'missing-timeline-place', `${item.title} needs a named place, address or route link.`, `days[${index}].timeline[${timelineIndex}]`)
+      } else {
+        const [kind, id] = placeRef.split(':', 2)
+        const exists = kind === 'location'
+          ? locationIds.has(id)
+          : kind === 'lodging'
+            ? lodgingIds.has(id)
+            : kind === 'venue'
+              ? venueIds.has(id)
+              : false
+        if (!exists) {
+          addIssue(issues, 'error', 'missing-timeline-place-reference', `${item.title} uses unknown place ${placeRef}.`, `days[${index}].timeline[${timelineIndex}]`)
+        }
+      }
       return Math.max(previous, minute)
     }, -1)
     void lastMinute
@@ -151,6 +181,9 @@ export const validateTripData = (): ValidationResult => {
     }
     if (!stay.bookingUrl.startsWith('https://')) {
       addIssue(issues, 'error', 'unsafe-booking-url', `${stay.name} booking URL must use HTTPS.`, `lodging[${index}].bookingUrl`)
+    }
+    if (!stay.address.trim() || !stay.mapsUrl.startsWith('https://') || !stay.addressVerifiedOn) {
+      addIssue(issues, 'error', 'missing-lodging-location', `${stay.name} needs a checked street address and an HTTPS map link.`, `lodging[${index}]`)
     }
     if (stay.nightlyEquivalentEur >= 200) {
       addIssue(issues, 'error', 'lodging-nightly-cap', `${stay.name} is not below the €200 nightly cap.`, `lodging[${index}].nightlyEquivalentEur`)
@@ -217,6 +250,25 @@ export const validateTripData = (): ValidationResult => {
     }
   })
 
+  locations.forEach((location, index) => {
+    if (!location.name.trim() || !location.address.trim()) {
+      addIssue(issues, 'error', 'missing-location-detail', `${location.id} needs a name and address or route description.`, `locations[${index}]`)
+    }
+    if (!location.mapsUrl.startsWith('https://') || (location.links ?? []).some((link) => !link.url.startsWith('https://'))) {
+      addIssue(issues, 'error', 'unsafe-location-url', `${location.name} must use HTTPS links.`, `locations[${index}]`)
+    }
+    if (!/^2026-\d{2}-\d{2}$/.test(location.checkedOn)) {
+      addIssue(issues, 'error', 'invalid-location-date', `${location.name} needs a 2026 checked date.`, `locations[${index}].checkedOn`)
+    }
+  })
+
+  const timelineVenueIds = new Set(days.flatMap((day) => day.timeline.map((item) => item.venueId).filter(Boolean)))
+  for (const venue of venues.filter((candidate) => timelineVenueIds.has(candidate.id))) {
+    if (!venue.address?.trim() || !venue.addressVerifiedOn) {
+      addIssue(issues, 'error', 'missing-venue-address', `${venue.name} appears in the timeline and needs a checked address or area.`, `venues.${venue.id}`)
+    }
+  }
+
   for (const source of trip.sources) {
     if (!source.url.startsWith('https://')) {
       addIssue(issues, 'error', 'unsafe-source-url', `${source.title} must use an HTTPS URL.`, `trip.sources.${source.id}`)
@@ -264,7 +316,7 @@ export const validateTripData = (): ValidationResult => {
     addIssue(issues, 'error', 'car-budget-cap', 'The protected car budget exceeds €370.', 'trip.car.protectedBudgetEur')
   }
 
-  const serialized = JSON.stringify({ trip, days, venues, lodging, bookings, budgetCategories })
+  const serialized = JSON.stringify({ trip, days, venues, locations, lodging, bookings, budgetCategories, timelinePlaceRefs })
   if (/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i.test(serialized)) {
     addIssue(issues, 'error', 'privacy-email', 'Public trip data contains an email address.')
   }

@@ -1,7 +1,13 @@
-import { venues } from '../data/trip'
 import type { TimelineItem } from '../data/types'
+import { placeForTimelineItem } from '../lib/timeline-place'
 import { useTripState } from '../state/TripStateContext'
 import { StatusBadge } from './StatusBadge'
+
+const checkedDate = (date: string) => {
+  const [year, month, day] = date.split('-')
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  return `${Number(day)} ${months[Number(month) - 1]} ${year}`
+}
 
 export function Timeline({ items }: { items: TimelineItem[] }) {
   const { state, patch } = useTripState()
@@ -12,7 +18,7 @@ export function Timeline({ items }: { items: TimelineItem[] }) {
   return (
     <ol className="timeline">
       {items.map((item) => {
-        const venue = venues.find((candidate) => candidate.id === item.venueId)
+        const place = placeForTimelineItem(item)
         const complete = Boolean(state.completed[item.id])
         return (
           <li className={`timeline-item ${complete ? 'is-complete' : ''}`} key={item.id}>
@@ -29,10 +35,24 @@ export function Timeline({ items }: { items: TimelineItem[] }) {
                 </div>
               </div>
               <p className="timeline-detail">{item.detail}</p>
+              {place && (
+                <div className="timeline-location">
+                  <div className="timeline-location-copy">
+                    <small>{place.label} · checked {checkedDate(place.checkedOn)}</small>
+                    <strong>{place.name}</strong>
+                    <address>{place.address}</address>
+                    {place.note && <p>{place.note}</p>}
+                  </div>
+                  <div className="timeline-location-links">
+                    {place.links.map((link) => (
+                      <a href={link.url} key={`${item.id}-${link.label}`} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="timeline-footer">
                 {item.endTime && <span>Until {item.endTime}</span>}
                 {typeof item.costEurForTwo === 'number' && <span>€{item.costEurForTwo} for two · {item.priceStatus}</span>}
-                {venue && <a href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Maps</a>}
               </div>
             </article>
           </li>
