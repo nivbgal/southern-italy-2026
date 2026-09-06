@@ -8,7 +8,7 @@ import { days, lodging, venues } from '../data/trip'
 import { venueBadge, venueRatingLabel } from '../lib/venue'
 import { useTripState } from '../state/TripStateContext'
 
-const birthdayRequest = `Hello, I would like to book the evening cooking class on 16 September 2026 for two people. It is Rinat's 27th birthday. Can you offer a 19:30 start, a small cake presentation, lively music, local wine, and a safe, playful flour moment? Please confirm the total price for two, start time, duration, cancellation terms, and the birthday details that you can guarantee. We will book after your reply. Thank you, Niv.`
+const birthdayRequest = `Hello, I would like to reserve a table for two at 20:00 on Wednesday, 16 September 2026. It is Rinat's 27th birthday. Could you add a birthday note and serve one dessert with a candle? If possible, we would like a quiet table. Please confirm the cover charge and whether the six-course chef menu is €75 per person. We have no dietary restrictions. Thank you, Niv.`
 
 export function DayPage() {
   const { date } = useParams()
@@ -65,7 +65,7 @@ export function DayPage() {
 
       {day.date === '2026-09-16' && (
         <section className="birthday-request">
-          <div><p className="eyebrow">Draft only · approval needed before sending</p><h2>Message for Pugliamare</h2><p>The class page includes dinner, wine and limoncello. It does not promise a party.</p></div>
+          <div><p className="eyebrow">Draft only · review before sending</p><h2>Note for Radimare</h2><p>Use this in the booking note or send it before the meal. No message has been sent.</p><a className="inline-link" href="https://radimare.com/reservation/en" target="_blank" rel="noopener noreferrer">Open the live reservation page</a></div>
           <textarea readOnly value={birthdayRequest} aria-label="Birthday request draft" />
           <button className="button primary" type="button" onClick={() => { if (!navigator.clipboard) { setBirthdayMessageStatus('Copy is unavailable. Select the text above.'); return } void navigator.clipboard.writeText(birthdayRequest).then(() => setBirthdayMessageStatus('Copied. Review it before you send it.')).catch(() => setBirthdayMessageStatus('Copy failed. Select the text above.')) }}>Copy request</button>
           {birthdayMessageStatus && <p role="status">{birthdayMessageStatus}</p>}

@@ -128,6 +128,19 @@ describe('trip content integrity', () => {
     expect(day.fallbacks.some((fallback) => /skip Bari/i.test(fallback.plan))).toBe(true)
   })
 
+  it('uses a bookable Michelin-listed birthday dinner within the trip cap', () => {
+    const day = days.find((item) => item.date === '2026-09-16')!
+    const dinner = day.timeline.find((item) => item.id === 'd03-dinner')
+    const booking = bookings.find((item) => item.id === 'birthday-radimare')
+    const venue = venues.find((item) => item.id === 'radimare-monopoli')
+
+    expect(dinner).toMatchObject({ time: '20:00', costEurForTwo: 200, status: 'needs-booking' })
+    expect(booking).toMatchObject({ priceEurForTwo: 200, status: 'needs-booking' })
+    expect(venue).toMatchObject({ rating: 4.8, reviewCount: 315, qualification: 'threshold-qualified' })
+    expect(day.timeline.some((item) => item.bookingId === 'birthday-cooking')).toBe(false)
+    expect(budgetCategories.find((item) => item.id === 'birthday')?.amountEur).toBe(290)
+  })
+
   it('reconciles the two-person trip budget without counting exclusions', () => {
     const included = budgetCategories
       .filter((category) => category.status !== 'excluded' && category.status !== 'reserve')

@@ -61,7 +61,7 @@ export function OverviewPage() {
       </div>
 
       <section className="personal-picks">
-        <div className="section-heading"><div><p className="eyebrow">Saved by Rinat</p><h2>Eight places fitted into the route</h2></div><p>Each rating shows its check date. Low ratings and unrated place pins stay visible.</p></div>
+        <div className="section-heading"><div><p className="eyebrow">Saved by Rinat</p><h2>Eight places kept with the plan</h2></div><p>Seven fit this route. The cooking class stays saved for another day.</p></div>
         <div className="personal-pick-list">
           {personalPicks.map((venue, index) => (
             <article key={venue.id}>
@@ -79,10 +79,10 @@ export function OverviewPage() {
         <div>
           <p className="eyebrow">Wednesday · 16 September</p>
           <h2>Rinat turns 27 by the Adriatic</h2>
-          <p>Boat caves and a swim, a slow afternoon, sunset cake and prosecco, then a cooking class with dinner, local wine and limoncello.</p>
-          <p className="truth-note"><strong>Current status:</strong> the evening time and party treatment still need confirmation.</p>
+          <p>Boat caves and a swim, a slow afternoon, sunset photos, then a dress-up dinner at Michelin-listed Radimare in Monopoli.</p>
+          <p className="truth-note"><strong>Current status:</strong> the live calendar showed a 20:00 table on 6 September. Nothing is reserved.</p>
         </div>
-        <div className="birthday-price"><small>planned for two</small><strong>€243–248</strong><Link className="button primary" to={`/day/${birthday.date}`}>Open birthday plan</Link></div>
+        <div className="birthday-price"><small>planned for two</small><strong>€290</strong><Link className="button primary" to={`/day/${birthday.date}`}>Open birthday plan</Link></div>
       </section>
 
       <section className="budget-card overview-budget">

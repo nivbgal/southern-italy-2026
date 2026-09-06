@@ -37,7 +37,8 @@ test.describe('public itinerary', () => {
     await openRoute(page, '/day/2026-09-16')
     await expect(page.getByRole('heading', { level: 1 })).toContainText(/16|Birthday/i)
     await expect(page.locator('main')).toContainText(/birthday/i)
-    await expect(page.locator('main')).toContainText(/boat|cooking/i)
+    await expect(page.locator('main')).toContainText(/boat/i)
+    await expect(page.locator('main')).toContainText(/Radimare/i)
     await expect(page.locator('main')).toContainText(/confirm|planned|inquiry|book/i)
   })
 
@@ -110,6 +111,7 @@ test.describe('public itinerary', () => {
     await expect(page.locator('.personal-pick-list')).toContainText('Bari Vecchia')
     await expect(page.locator('.personal-pick-list')).toContainText('Clarks Shop Bari')
     await expect(page.locator('.personal-pick-list')).toContainText('Cooking Class Pugliamare')
+    await expect(page.locator('.personal-pick-list')).toContainText('Saved for another day')
     await expect(page.locator('.personal-pick-list')).toContainText('Lido Bambù')
     await expect(page.locator('.personal-pick-list')).toContainText('Il Quadrifoglio')
     await expect(page.locator('.personal-pick-list')).toContainText('ACQUASANTA')

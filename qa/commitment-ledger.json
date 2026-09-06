@@ -46,19 +46,27 @@
     },
     {
       "id": "BDAY-01",
-      "source": "User birthday requirement",
-      "requirement": "Make Sep 16 a special birthday with a lively boat and cooking-centered plan, honest booking status, and fallback.",
+      "source": "User birthday update on 6 Sep 2026",
+      "requirement": "Make Sep 16 a special birthday with a cave boat, sunset photos, dress-up time and a fine-dining restaurant. Keep the cooking class as an unscheduled save.",
       "destination": "Sep 16 page",
       "status": "implemented",
-      "evidence": ["src/data/trip.ts Sep 16 plan and fallbacks", "tests/e2e/itinerary.spec.ts birthday-state test"]
+      "evidence": ["src/data/trip.ts Sep 16 Radimare plan and fallbacks", "tests/e2e/itinerary.spec.ts birthday-state test"]
     },
     {
       "id": "BDAY-02",
-      "source": "Accepted budget preference",
-      "requirement": "Keep the birthday target near EUR 250 and below EUR 300 for two unless clearly marked otherwise.",
+      "source": "User set a EUR 260 restaurant limit on 6 Sep 2026",
+      "requirement": "Keep the restaurant bill below EUR 260 for two and keep the full birthday day close to EUR 290.",
       "destination": "Birthday and budget views",
       "status": "implemented",
-      "evidence": ["src/data/trip.ts birthday total EUR 243-248 and EUR 250 budget category", "tests/unit/trip-data.test.ts budget reconciliation"]
+      "evidence": ["src/data/trip.ts Radimare target EUR 200, restaurant limit EUR 230 and birthday budget EUR 290", "tests/unit/trip-data.test.ts birthday dinner and budget assertions"]
+    },
+    {
+      "id": "BDAY-03",
+      "source": "Live restaurant checks on 6 Sep 2026",
+      "requirement": "Use a birthday restaurant that is open on Wednesday, has live space for two, meets the Maps threshold and has a current menu that fits the limit.",
+      "destination": "Sep 16 page and bookings view",
+      "status": "implemented",
+      "evidence": ["Radimare live calendar showed 20:00 and later times", "Google rating evidence showed 4.8 from 315 reviews", "src/data/trip.ts current menu prices and booking terms"]
     },
     {
       "id": "BEACH-01",
